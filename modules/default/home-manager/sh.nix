@@ -28,7 +28,7 @@ in
     autocd = true;
     enable = true;
     defaultKeymap = "viins";
-    enableAutosuggestions = true;
+    autosuggestion.enable = true;
     enableCompletion = true;
     shellAliases = alias;
     syntaxHighlighting.enable = true;

@@ -82,19 +82,20 @@
   # Configure keymap in X11
   services.xserver = {
     enable = true;
-    layout = "us";
-    xkbVariant = "";
+    xkb.layout = "us";
+    xkb.variant = "";
     videoDrivers = [ "modesetting" ]; # Use "modesetting" driver
     screenSection = ''
       Option "UseEdid" "false"
       Option "PreferredMode" "2560x1600"
     '';
-    displayManager.sddm = {
+  };
+
+  services.displayManager.sddm = {
       enable = true;
       wayland.enable = true;
       enableHidpi = true;
     };
-  };
 
   programs.hyprland = {
     enable = true;
@@ -128,7 +129,7 @@
   services.printing.drivers = [ pkgs.hplip ];
   services.avahi = {
     enable = true;
-    nssmdns = true;
+    nssmdns4 = true;
     openFirewall = true;
   };
 
