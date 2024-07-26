@@ -1,0 +1,6 @@
+(defvar showCal false)
+
+(defwidget newCalendar []
+	(eventbox :onhover "${EWW_CMD} update showCal=true"
+		:onhoverlost "${EWW_CMD} update showCal=false"
+			(label "🕰 $(date '+%d %b, %H:%M')")))

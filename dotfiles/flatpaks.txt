@@ -1,0 +1,5 @@
+com.github.tchx84.Flatseal
+dev.vencord.Vesktop
+info.febvre.Komikku
+md.obsidian.Obsidian
+net.kuribo64.melonDS
