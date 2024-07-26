@@ -7,6 +7,7 @@
       ./hardware-configuration.nix
       inputs.home-manager.nixosModules.default
       ../../modules/default/nixos/games.nix
+      ../../modules/default/nixos/audio.nix
     ];
   
 
@@ -30,29 +31,6 @@
     0.0.0.0 sg-public-data-api.hoyoverse.com
   '';
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Enable audio
-
-  hardware.pulseaudio.enable = true;
-  hardware.pulseaudio.support32Bit = true;
-  hardware.pulseaudio.package = pkgs.pulseaudioFull;
-  hardware.alsa.enable = true;
-  hardware.alsa.support32Bit = true;
-
-
-  # sound.enable = true;
-  # services = {
-  #   pipewire = {
-  #     enable = true;
-  #     audio.enable = true;
-  #     pulse.enable = true;
-  #     alsa = {
-  #       enable = true;
-  #       support32Bit = true;
-  #     };
-  #     jack.enable = true;
-  #   };
-  # };
 
   # bluetooth setup
   hardware.bluetooth.enable = true; # enables support for Bluetooth
