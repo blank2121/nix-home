@@ -20,5 +20,5 @@
     };
 
   # outdated for config
-  wayland.windowManager.hyprland.extraConfig = builtins.readFile ~/myHome/dotfiles/.config/hypr/hyprland.conf;
+  wayland.windowManager.hyprland.extraConfig = builtins.readFile "${config.home.homeDirectory}/myHome/dotfiles/.config/hypr/hyprland.conf";
 }

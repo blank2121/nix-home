@@ -47,7 +47,7 @@
     # do declaritively
     lf = {
       enable = true;
-      extraConfig = builtins.readFile ~/myHome/dotfiles/.config/lf/lfrc;
+      extraConfig = builtins.readFile "${config.home.homeDirectory}/myHome/dotfiles/.config/lf/lfrc";
     };
 
     password-store.enable = true; 
