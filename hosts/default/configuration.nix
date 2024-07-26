@@ -8,6 +8,7 @@
       inputs.home-manager.nixosModules.default
       ../../modules/default/nixos/games.nix
       ../../modules/default/nixos/audio.nix
+      ../../modules/default/nixos/style.nix
     ];
   
 

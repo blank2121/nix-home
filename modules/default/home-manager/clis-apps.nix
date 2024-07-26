@@ -38,10 +38,10 @@
     pass
     poetry
     python312Full
-    # remnote
+    remnote
     ripgrep
     rustup
-    # spotify
+    spotify
     texliveFull
     tor-browser
     trash-cli
