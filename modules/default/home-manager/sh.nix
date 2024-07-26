@@ -3,7 +3,7 @@
 let
   alias = {
     bt = "bluetoothctl";
-    lf = "../../../dotfiles/.config/lf/lfub";
+    lf = "~/myHome/dotfiles/.config/lf/lfub";
     mpv = "flatpak run io.mpv.Mpv";
     notify-send = "dunstify";
     nv = "nvim";

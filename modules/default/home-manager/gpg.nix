@@ -4,7 +4,10 @@
   programs.gpg = {
     enable = true;
     publicKeys = [
-      { source = ../../../gpg-key/subkey.pub; }
+      {
+        text = builtins.readFile "${config.home.homeDirectory}/myHome/gpg-key/subkey.pub";
+	trust = 5;
+      }
     ];
   };
 

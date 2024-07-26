@@ -32,18 +32,26 @@
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Enable audio
-  #sound.enable = true;
-  #services = {
-    # pipewire = {
-      # enable = true;
-      # audio.enable = true;
-      # pulse.enable = true;
-      # alsa = {
-        # enable = true;
-        # support32Bit = true;
-      # };
-      # jack.enable = true;
-    # };
+
+  hardware.pulseaudio.enable = true;
+  hardware.pulseaudio.support32Bit = true;
+  hardware.pulseaudio.package = pkgs.pulseaudioFull;
+  hardware.alsa.enable = true;
+  hardware.alsa.support32Bit = true;
+
+
+  # sound.enable = true;
+  # services = {
+  #   pipewire = {
+  #     enable = true;
+  #     audio.enable = true;
+  #     pulse.enable = true;
+  #     alsa = {
+  #       enable = true;
+  #       support32Bit = true;
+  #     };
+  #     jack.enable = true;
+  #   };
   # };
 
   # bluetooth setup
