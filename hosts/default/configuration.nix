@@ -71,7 +71,7 @@
     enable = true;
     xkb.layout = "us";
     xkb.variant = "";
-    videoDrivers = [ "modesetting" ]; # Use "modesetting" driver
+    videoDrivers = [ "amdgpu" ]; # Use "modesetting" driver
     screenSection = ''
       Option "UseEdid" "false"
       Option "PreferredMode" "2560x1600"
@@ -101,9 +101,6 @@
     packages = with pkgs; [ ];
   };
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
   # List packages installed in system profile. To search, run:
   environment.systemPackages = with pkgs; [
     bash
@@ -118,39 +115,6 @@
     enable = true;
     nssmdns4 = true;
     openFirewall = true;
-  };
-
-
-  fonts = {
-    enableDefaultPackages = true;
-    fontDir.enable = true;
-    fontconfig = {
-      enable = true;
-      antialias = true;
-      cache32Bit = true;
-      hinting.autohint = true;
-      hinting.enable = true;
-      defaultFonts = {
-        serif = [ "JetBrainsMono Nerd Font" ];
-        sansSerif = [ "JetBrainsMono Nerd Font" ];
-        monospace = [ "JetBrainsMono Nerd Font" ];
-        emoji = [ "Fira Code Symbol" ];
-      };
-    };
-    packages = with pkgs; [
-      ubuntu_font_family
-      # Persian Font
-      vazir-fonts
-      noto-fonts
-      noto-fonts-cjk
-      noto-fonts-emoji
-      liberation_ttf
-      (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" "JetBrainsMono" ]; })
-      fira-code-symbols
-      mplus-outline-fonts.githubRelease
-      dina-font
-      proggyfonts
-    ];
   };
 
   services.tlp = {

@@ -10,19 +10,22 @@
     };
 
     stylix.url = "github:danth/stylix";
+
+    nixos-hardware.url = "github:Nixos/nixos-hardware/master";
   };
 
-  outputs = { self, nixpkgs, ... }@inputs:
+  outputs = { self, nixpkgs, nixos-hardware, home-manager, stylix, ... }@inputs:
     let 
       system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+      pkgs = import nixpkgs { inherit system; config.allowUnfree = true; };
     in {
       nixosConfigurations.default = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs;};
         modules = [
       	  ./hosts/default/configuration.nix
-          inputs.home-manager.nixosModules.default
-	  inputs.stylix.nixosModules.stylix
+          home-manager.nixosModules.default
+	  stylix.nixosModules.stylix
+	  nixos-hardware.nixosModules.asus-zephyrus-ga402x-amdgpu
         ];
       };
     };

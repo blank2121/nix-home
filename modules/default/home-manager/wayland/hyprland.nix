@@ -6,7 +6,7 @@
   ];
 
   home.packages = with pkgs; [
-    rofi-wayland
+    #rofi-wayland
     swww
     waybar
     wineWowPackages.waylandFull

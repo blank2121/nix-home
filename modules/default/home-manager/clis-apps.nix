@@ -38,10 +38,10 @@
     pass
     poetry
     python312Full
-    remnote
+    # remnote
     ripgrep
     rustup
-    spotify
+    # spotify
     texliveFull
     tor-browser
     trash-cli
@@ -56,29 +56,38 @@
   # apps
   programs.kitty = {
     enable = true;
-    font = {
-      name = "JetBrainsMono Nerd Font";
-      size = 12;
-    };
     settings = {
       enable_audio_bell = false;
-      include = "~/dotfiles/.config/kitty/themes/Decay-Green.conf";
     };
     extraConfig = ''
       background_opacity 0.85
     '';
   };
 
-  home.file."rofi" = {
+  programs.rofi = {
     enable = true;
-    source = ../../../dotfiles/.config/rofi/config.rasi;
-    target = ".config/rofi/config.rasi";
+    package = pkgs.rofi-wayland;
+    extraConfig = {
+      modi = "run,drun,window";
+      "icon-theme" = "Oranchelo";
+      "show-icons" = true; 
+      terminal = "kitty";
+      "drun-display-format" = "{icon} {name}";
+      "location" = 0;
+      "disable-history" = false;
+      "hide-scrollbar" = true;
+      "display-drun" = "   Apps ";
+      "display-run" = "   Run ";
+      "display-window" = " 﩯  Window";
+      "display-Network" = " 󰤨  Network";
+      "sidebar-mode" = true;
+    };
   };
 
   programs.helix = {
     enable = true;
     settings = {
-      theme = "base16_default";
+      # theme = "base16_default";
       editor = {
         line-number = "relative";
         
