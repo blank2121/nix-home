@@ -3,7 +3,6 @@
 {
   imports =
     [
-      # Include the results of the hardware scan.
       ./hardware-configuration.nix
       inputs.home-manager.nixosModules.default
       ../../modules/default/nixos/games.nix
@@ -37,14 +36,6 @@
   hardware.bluetooth.enable = true; # enables support for Bluetooth
   hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
   services.blueman.enable = true;
-
-  # pinetry for gpg
-  services.pcscd.enable = true;
-  # programs.gnupg.agent = {
-    # enable = true;
-    # pinentryFlavor = "curses";
-    # enableSSHSupport = true;
-  # };
 
   # Enable networking
   networking.networkmanager.enable = true;
