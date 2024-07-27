@@ -8,6 +8,7 @@
     ../../modules/default/home-manager/python-pkgs.nix
     ../../modules/default/home-manager/services.nix
     ../../modules/default/home-manager/sh.nix
+    ../../modules/default/home-manager/git.nix
     ../../modules/default/home-manager/wayland/hyprland.nix
   ];
   home = {
@@ -40,8 +41,6 @@
       enableZshIntegration = true;
     };
 
-    gh.enable = true;
-    gitui.enable = true;
     home-manager.enable = true;
 
     # do declaritively

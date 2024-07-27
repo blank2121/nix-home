@@ -1,6 +1,12 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
+  # allowing unfree apps
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+    "spotify"
+    "remnote"
+  ];
+
   home.packages = with pkgs; [
     angryipscanner
     brightnessctl
@@ -12,8 +18,6 @@
     gcc
     gh
     ghc
-    git
-    gitui
     glow
     gnumake
     gnupg
@@ -38,10 +42,10 @@
     pass
     poetry
     python312Full
-    # remnote
+    remnote
     ripgrep
     rustup
-    # spotify
+    spotify
     texliveFull
     tor-browser
     trash-cli
