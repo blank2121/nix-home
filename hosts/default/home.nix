@@ -53,6 +53,7 @@
     password-store.enable = true; 
 
     ripgrep.enable = true;
+
     starship = {
       enable = true;
       enableZshIntegration = true;
@@ -73,12 +74,5 @@
       enable = true;
       enableZshIntegration = true;
     };
-  };
-
-  # home.file conf
-  home.file."starship.toml" = {
-    enable = true;
-    source = ../../dotfiles/.config/starship.toml;
-    target = ".config/starship.toml";
   };
 }

@@ -10,17 +10,17 @@
   stylix.fonts = {
     serif = {
       package = (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; });
-      name = "JetBrainsMono";
+      name = "JetBrainsMono Nerd Font";
     };
 
     sansSerif = {
       package = (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; });
-      name = "JetBrainsMono";
+      name = "JetBrainsMono Nerd Font";
     };
 
     monospace = {
       package = (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; });
-      name = "JetBrainsMono";
+      name = "JetBrainsMono Nerd Font";
     };
 
     emoji = {

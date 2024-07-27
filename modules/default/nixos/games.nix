@@ -21,7 +21,7 @@ in
   ];
 
   environment.sessionVariables = {
-    STEAM_EXTRA_COMPACT_TOOL_PATHS = "${config.home.homeDirectory}/.steam/root/compatibilitytools.d";
+    STEAM_EXTRA_COMPACT_TOOL_PATHS = "/home/winston/.steam/root/compatibilitytools.d";
   };
 
   programs.steam.enable = true;

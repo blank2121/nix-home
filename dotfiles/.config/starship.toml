@@ -120,3 +120,21 @@ format = 'via [$symbol]($style)'
 
 [zig]
 format = 'via [$symbol]($style)'
+
+# ------- git --------
+
+[git_status]
+conflicted = ''
+ahead = ''
+behind = ''
+diverged = ''
+up_to_date = ''
+untracked = ''
+stashed = ''
+modified = ''
+staged = ''
+renamed = ''
+deleted = ''
+typechanged = ''
+
+
