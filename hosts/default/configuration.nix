@@ -3,11 +3,12 @@
 {
   imports =
     [
+      ../../modules/default/nixos/audio.nix
+      ../../modules/default/nixos/flatpaks.nix
+      ../../modules/default/nixos/games.nix
+      ../../modules/default/nixos/style.nix
       ./hardware-configuration.nix
       inputs.home-manager.nixosModules.default
-      ../../modules/default/nixos/games.nix
-      ../../modules/default/nixos/audio.nix
-      ../../modules/default/nixos/style.nix
     ];
   
 
@@ -96,8 +97,6 @@
   environment.systemPackages = with pkgs; [
     bash
   ];
-
-  services.flatpak.enable = true;
 
   # Printing
   services.printing.enable = true;

@@ -6,6 +6,13 @@
   stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/rose-pine.yaml";
   stylix.image = ../sytlix.png;
 
+  # cursor
+  stylix.cursor = {
+    package = pkgs.rose-pine-cursor;
+    name = "BreezeX-RosePine-Linux";
+    size = 32;
+  };
+
   # fonts
   stylix.fonts = {
     serif = {
