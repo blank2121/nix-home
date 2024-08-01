@@ -3,17 +3,18 @@
 {
   # allowing unfree apps
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-    "spotify"
+    "obsidian"
     "remnote"
+    "spotify"
   ];
 
   home.packages = with pkgs; [
     angryipscanner
+    ansel
     brightnessctl
     btrfs-progs
     fd
     firefox
-    flatpak
     fzf
     gcc
     gh
@@ -26,15 +27,18 @@
     haskellPackages.cabal-install
     haskellPackages.haskell-language-server
     hplip
+    jan
     jq
     julia
+    komikku
+    libreoffice
     mark
     mprocs
     mpv
-
     nmap
     nodejs_20
     #ntfy
+    obsidian
     openjdk
     openssl_3
     pandoc
@@ -47,14 +51,15 @@
     rustup
     spotify
     texliveFull
+    thunderbird-128
     tor-browser
     trash-cli
     ueberzugpp
+    vesktop
     vim
     wget
     which
     winetricks
-    ansel
   ];
 
   # apps

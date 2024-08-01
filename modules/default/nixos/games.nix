@@ -10,6 +10,7 @@ in
     aagl-gtk-on-nix.module
   ];
 
+  # one off games/apps
   programs.honkers-railway-launcher.enable = true;
 
   # steam gaming
@@ -30,9 +31,12 @@ in
   environment.systemPackages = with pkgs; [
     mangohud
     protonup
+    r2modman
+
+    # emulators
+    ryujinx
+    melonDS
   ];
 
   programs.gamemode.enable = true;
-
-
 }

@@ -19,6 +19,10 @@
       ELECTRON_OZONE_PLATFORM_HINT = "auto";
     };
 
-  # outdated for config
+  # wayland.windowManager.hyprland.enable = true;
   wayland.windowManager.hyprland.extraConfig = builtins.readFile "${config.home.homeDirectory}/myHome/dotfiles/.config/hypr/hyprland.conf";
+
+
+  
+
 }

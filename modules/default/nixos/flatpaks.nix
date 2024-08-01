@@ -8,11 +8,6 @@
     onCalendar = "weekly";
   };
   services.flatpak.packages = [
-    "dev.vencord.Vesktop"
-    "md.obsidian.Obsidian"
-    "net.kuribo64.melonDS"
-    "info.febvre.Komikku"
-    "com.github.tchx84.Flatseal"
-    "org.libreoffice.LibreOffice"
+    "net.labymod.LabyMod"
   ];
 }
