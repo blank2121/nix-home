@@ -68,13 +68,23 @@
       Option "UseEdid" "false"
       Option "PreferredMode" "2560x1600"
     '';
+    displayManager.lightdm.greeters.mini = {
+      enable = true;
+      user = "winston";
+      extraConfig = ''
+        [greeter]
+        show-password-label = true
+        [greeter-theme]
+        background-image = ""
+      '';
+    };
   };
 
-  services.displayManager.sddm = {
-      enable = true;
-      wayland.enable = true;
-      enableHidpi = true;
-    };
+  # services.displayManager.sddm = {
+  #     enable = true;
+  #     wayland.enable = true;
+  #     enableHidpi = true;
+  #   };
 
   programs.hyprland = {
     enable = true;
@@ -82,6 +92,7 @@
   };
 
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
+  environment.sessionVariables.ELECTRON_OZONE_PLATFORM_HINT = "auto";
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   programs.zsh.enable = true;

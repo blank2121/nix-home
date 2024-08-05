@@ -3,13 +3,15 @@
 {
 
   imports = [
-    ../../modules/default/home-manager/gpg.nix
     ../../modules/default/home-manager/clis-apps.nix
+    ../../modules/default/home-manager/file-viewer.nix
+    ../../modules/default/home-manager/git.nix
+    ../../modules/default/home-manager/gpg.nix
     ../../modules/default/home-manager/python-pkgs.nix
     ../../modules/default/home-manager/services.nix
     ../../modules/default/home-manager/sh.nix
-    ../../modules/default/home-manager/git.nix
     ../../modules/default/home-manager/wayland/hyprland.nix
+    ../../modules/default/home-manager/zellij.nix
   ];
   home = {
     username = "winston";
@@ -44,10 +46,10 @@
     home-manager.enable = true;
 
     # do declaritively
-    lf = {
-      enable = true;
-      extraConfig = builtins.readFile "${config.home.homeDirectory}/myHome/dotfiles/.config/lf/lfrc";
-    };
+    # lf = {
+    #   enable = true;
+    #   extraConfig = builtins.readFile "${config.home.homeDirectory}/myHome/dotfiles/.config/lf/lfrc";
+    # };
 
     password-store.enable = true; 
 
@@ -61,11 +63,6 @@
     thefuck = {
       enable = true;
       enableInstantMode = true;
-      enableZshIntegration = true;
-    };
-
-    zellij = {
-      enable = true;
       enableZshIntegration = true;
     };
 
