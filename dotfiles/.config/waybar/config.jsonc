@@ -32,7 +32,7 @@
     "custom/wallchange": {
         "format": "󰋰 {}",
         "exec": "echo ; echo 󰋰 random wallpaper",
-        "on-click": "exec ~/Photos/wallpaper/random.sh",
+        "on-click": "nix run ~/shells/#random-wallpaper ~/Pictures/wallpaper/",
         "interval": 86400,
         "tooltip": true,
     },
@@ -54,7 +54,7 @@
 	},
 
     "custom/spotify": {
-        "exec": "/usr/bin/python3 /home/tittu/.config/waybar/modules/mediaplayer.py --player spotify",
+        "exec": "python3 /home/winston/.config/waybar/modules/mediaplayer.py --player spotify",
         "format": " {}",
         "return-type": "json",
         "on-click": "playerctl play-pause --player spotify",

@@ -14,6 +14,8 @@
     nixos-hardware.url = "github:Nixos/nixos-hardware/master";
 
     nix-flatpak.url = "github:gmodena/nix-flatpak";
+
+    nixvim.url = "github:blank2121/nixvim";
   };
 
   outputs = { self, nixpkgs, nixos-hardware, home-manager, stylix, nix-flatpak, ... }@inputs:

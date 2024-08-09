@@ -18,7 +18,7 @@ keybinds {
     }
     shared_except "locked" {
         bind "Ctrl y" {
-            LaunchOrFocusPlugin "file:~/myHome/.config/zellij/plugins/zellij-jump-list.wasm" {
+            LaunchOrFocusPlugin "file:~/myHome/dotfiles/.config/zellij/plugins/zellij-jump-list.wasm" {
                 floating true; move_to_focused_tab true;
             }
         }
@@ -71,8 +71,8 @@ themes {
 
 // theme "dracula"
 
-layout_dir "~/myHome/.config/zellij/layouts/"
+layout_dir "~/.config/zellij/layouts/"
 
-layout "swap"
+layout "simple"
 
-default_layout "~/myHome/.config/zellij/layouts/swap.kdl"
+default_layout "/home/winston/.config/zellij/layouts/simple.kdl"
