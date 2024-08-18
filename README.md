@@ -2,5 +2,4 @@
 
 idk what to say but this is my stuff! :)
 
-#### what to add:
-- flatpaks via nix-flatpaks
+## **Check out what current issues exist and are known about: [Issues](./PROBLEMS.md)**
