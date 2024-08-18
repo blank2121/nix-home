@@ -13,10 +13,5 @@
     wlogout
   ];
 
-  home.file.hyprland = {
-    enable = true;
-    recursive = true;
-    source = ../../../../dotfiles/.config/hypr;
-    target = ".config/hypr/";
-  };
+  # home.file.".config/hypr/hyprland.conf".source = ../../../../dotfiles/.config/hypr/hyprland.conf;
 }

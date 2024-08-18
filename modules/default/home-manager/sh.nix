@@ -8,8 +8,9 @@ let
     notify-send = "dunstify";
     nv = "nvim";
     rm = "trash-put";
+    cd = "z";
     times = "sudo -E timeshift-gtk";
-    wallpaper = "swww img --transition-type=any";
+    wallpaper = "nix run ~/shells/#random-wallpaper ~/Pictures/wallpaper/";
     zj = "zellij";
   };
   extra = ''

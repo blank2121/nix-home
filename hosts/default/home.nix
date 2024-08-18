@@ -17,7 +17,7 @@
     username = "winston";
     homeDirectory = "/home/winston";
 
-    stateVersion = "23.11";
+    stateVersion = "24.05";
 
     sessionVariables = {
       EDITOR = "nv";
@@ -28,10 +28,6 @@
   };
 
   programs = {
-    bacon.enable = true;
-    bat.enable = true;
-    bottom.enable = true;
-
     eza = {
       enable = true;
       icons = true;
@@ -45,12 +41,6 @@
 
     home-manager.enable = true;
 
-    # do declaritively
-    # lf = {
-    #   enable = true;
-    #   extraConfig = builtins.readFile "${config.home.homeDirectory}/myHome/dotfiles/.config/lf/lfrc";
-    # };
-
     password-store.enable = true; 
 
     ripgrep.enable = true;
@@ -62,7 +52,6 @@
 
     thefuck = {
       enable = true;
-      enableInstantMode = true;
       enableZshIntegration = true;
     };
 

@@ -9,8 +9,11 @@
   ];
 
   home.packages = with pkgs; [
-    angryipscanner
-    ansel
+    #ntfy
+    # ansel
+    bacon
+    bat
+    bottom
     brightnessctl
     btrfs-progs
     fd
@@ -37,7 +40,6 @@
     mpv
     nmap
     nodejs_20
-    #ntfy
     obsidian
     openjdk
     openssl_3
@@ -54,12 +56,13 @@
     thunderbird-128
     tor-browser
     trash-cli
-    ueberzugpp
+    # ueberzugpp
     vesktop
     vim
     wget
     which
     winetricks
+    wireshark
   ];
 
   # apps
@@ -112,10 +115,5 @@
       rust-analyzer
       marksman
     ];
-  };
-
-  programs.eww = {
-    enable = true;
-    configDir = ../../../dotfiles/.config/eww;
   };
 }

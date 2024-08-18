@@ -73,6 +73,6 @@ themes {
 
 layout_dir "~/.config/zellij/layouts/"
 
-layout "simple"
+layout "swap"
 
-default_layout "/home/winston/.config/zellij/layouts/simple.kdl"
+default_layout "/home/winston/.config/zellij/layouts/swap.kdl"

@@ -4,12 +4,11 @@
   imports =
     [
       ../../modules/default/nixos/audio.nix
-      ../../modules/default/nixos/flatpaks.nix
+      #../../modules/default/nixos/flatpaks.nix
       ../../modules/default/nixos/games.nix
       ../../modules/default/nixos/nixvim.nix
       ../../modules/default/nixos/style.nix
       ./hardware-configuration.nix
-      inputs.home-manager.nixosModules.default
     ];
   
 
@@ -69,27 +68,17 @@
       Option "UseEdid" "false"
       Option "PreferredMode" "2560x1600"
     '';
-    displayManager.lightdm.greeters.mini = {
-      enable = true;
-      user = "winston";
-      extraConfig = ''
-        [greeter]
-        show-password-label = true
-        [greeter-theme]
-        background-image = ""
-      '';
-    };
   };
-
-  # services.displayManager.sddm = {
-  #     enable = true;
-  #     wayland.enable = true;
-  #     enableHidpi = true;
-  #   };
 
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
+  };
+
+  services.displayManager.sddm = {
+    enable = true;
+    wayland.enable = true;
+    enableHidpi = true;
   };
 
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
