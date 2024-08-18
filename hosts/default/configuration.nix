@@ -4,7 +4,7 @@
   imports =
     [
       ../../modules/default/nixos/audio.nix
-      #../../modules/default/nixos/flatpaks.nix
+      ../../modules/default/nixos/flatpaks.nix
       ../../modules/default/nixos/games.nix
       ../../modules/default/nixos/nixvim.nix
       ../../modules/default/nixos/style.nix

@@ -57,6 +57,8 @@
     tor-browser
     trash-cli
     # ueberzugpp
+    ueberzug
+
     vesktop
     vim
     wget
