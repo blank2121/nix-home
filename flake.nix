@@ -2,7 +2,10 @@
   description = "My NixOS Home :)";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs = {
+      url = "github:nixos/nixpkgs/nixos-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -32,6 +35,16 @@
           nixos-hardware.nixosModules.asus-zephyrus-ga402x-amdgpu
           stylix.nixosModules.stylix
           # lix-module.nixosModules.default
+          {
+            nixpkgs.config = { 
+              allowUnfree = true;
+              allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [
+                "obsidian"
+                "remnote"
+                "spotify"
+              ];
+            };
+          }
         ];
       };
     };
