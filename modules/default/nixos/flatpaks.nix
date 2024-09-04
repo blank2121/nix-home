@@ -9,5 +9,6 @@
   };
   services.flatpak.packages = [
     "net.labymod.LabyMod"
+    "io.github.zen_browser.zen"
   ];
 }

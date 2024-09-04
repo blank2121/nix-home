@@ -1,15 +1,19 @@
 # Issues List
 
+### **kitty:** nixvim crashes when using that terminal and that terminal only
 
+**Fix:** Unknown. Just gonna use Alacritty or Foot for now.
+
+**Status:** Unfixed; problem avoided.
 
 
 ### ⚠️ **[Ueberzugpp](https://github.com/blank2121/nix-home/blob/3371726177041c17d9d6ba4688e519cbf2bf73bb/modules/default/home-manager/clis-apps.nix#L59) fails to compile via CMake**
 **Details:** When trying to compile `ueberzugpp`, the process fails during the CMake step.
 
 
-**Fix:** Use Ueberzug (not maintained) instead. 
+**Fix:** Use an older version of Ueberzugpp that works 
 
-**Status:** Temporarily Fixed
+**Status:** Fixed (but outdated)
 
 ---
 

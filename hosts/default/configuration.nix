@@ -4,16 +4,18 @@
   imports =
     [
       ../../modules/default/nixos/audio.nix
-      ../../modules/default/nixos/flatpaks.nix
+      # removing flatpaks as labymod kinda sucks
+      # ../../modules/default/nixos/flatpaks.nix
       ../../modules/default/nixos/games.nix
       ../../modules/default/nixos/nixvim.nix
       ../../modules/default/nixos/style.nix
       ./hardware-configuration.nix
     ];
-  
+ 
 
   # home-manager
   home-manager = {
+    backupFileExtension = "backup";
     extraSpecialArgs = { inherit inputs; };
     users = {
       "winston" = import ./home.nix;
@@ -85,8 +87,8 @@
   environment.sessionVariables.ELECTRON_OZONE_PLATFORM_HINT = "auto";
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  programs.zsh.enable = true;
-  users.defaultUserShell = pkgs.zsh;
+  #programs.zsh.enable = true;
+  users.defaultUserShell = pkgs.nushell;
   users.users.winston = {
     isNormalUser = true;
     description = "winston";
@@ -96,6 +98,7 @@
 
   # List packages installed in system profile. To search, run:
   environment.systemPackages = with pkgs; [
+    nushell
     bash
   ];
 

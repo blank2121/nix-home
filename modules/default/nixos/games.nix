@@ -3,7 +3,7 @@ let
   #Honkai Star Rail
   aagl-gtk-on-nix = import (builtins.fetchTarball {
     url = "https://github.com/ezKEa/aagl-gtk-on-nix/archive/main.tar.gz";
-    sha256 = "1mnsks7kibjr8kb1cjy2052kjaxrvfp5adg2ibfal7j9862042af";
+    sha256 = "023yqdxs83cxx39kl7cawwyr39c1qnnv4n99igpsm2a5yay3wmsa";
   });
 in
 {

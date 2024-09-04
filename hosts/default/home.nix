@@ -31,12 +31,12 @@
     eza = {
       enable = true;
       icons = true;
-      enableZshIntegration = true;
+      enableNushellIntegration = true;
     };
 
     fzf = {
       enable = true;
-      enableZshIntegration = true;
+      enableZshIntegration = false;
     };
 
     home-manager.enable = true;
@@ -47,17 +47,17 @@
 
     starship = {
       enable = true;
-      enableZshIntegration = true;
+      #enableNushellIntegration = true;
     };
 
     thefuck = {
       enable = true;
-      enableZshIntegration = true;
+      enableNushellIntegration = true;
     };
 
     zoxide = {
       enable = true;
-      enableZshIntegration = true;
+      #enableNushellIntegration = true;
     };
   };
 }

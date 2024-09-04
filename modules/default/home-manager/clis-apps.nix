@@ -1,15 +1,36 @@
 { config, pkgs, lib, ... }:
+let
+     zugpppkgs = import (builtins.fetchGit {
+         name = "ueberzugpp";
+         url = "https://github.com/NixOS/nixpkgs/";
+         ref = "refs/heads/nixpkgs-unstable";
+         rev = "0c19708cf035f50d28eb4b2b8e7a79d4dc52f6bb";
+     }) {};
 
-{
+     godotpkgs = import (builtins.fetchGit {
+         name = "godot_4";
+         url = "https://github.com/NixOS/nixpkgs/";
+         ref = "refs/heads/nixpkgs-unstable";
+         allRefs = true;
+         rev = "04dfd1b4f009eaf0c9753a1267864057800afc92";
+     }) {};
+
+     ueberzugpp = zugpppkgs.ueberzugpp;
+     godot_43-stable = godotpkgs.godot_4;
+     
+in {
   # allowing unfree apps
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-    "obsidian"
-    "remnote"
-    "spotify"
-  ];
+  nixpkgs.config = { 
+    allowUnfree = true;
+    allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ 
+      "obsidian"
+      "remnote"
+      "spotify"
+    ] ++ [godotpkgs.godot_4.getName];
+  };
 
   home.packages = with pkgs; [
-    #ntfy
+    # ntfy
     # ansel
     bacon
     bat
@@ -25,7 +46,7 @@
     glow
     gnumake
     gnupg
-    godot_4
+    # godot_4
     gum
     haskellPackages.cabal-install
     haskellPackages.haskell-language-server
@@ -34,6 +55,7 @@
     jq
     julia
     komikku
+    krita
     libreoffice
     mark
     mprocs
@@ -57,25 +79,30 @@
     tor-browser
     trash-cli
     # ueberzugpp
-    ueberzug
-
     vesktop
     vim
     wget
     which
     winetricks
     wireshark
-  ];
+  ] ++ [ ueberzugpp godot_43-stable ];
 
   # apps
-  programs.kitty = {
+
+  # ERROR: currently broken
+  # programs.kitty = {
+  #   enable = true;
+  #   settings = {
+  #     enable_audio_bell = false;
+  #   };
+  #   extraConfig = ''
+  #     background_opacity 0.85
+  #   '';
+  # };
+
+  programs.foot = {
     enable = true;
-    settings = {
-      enable_audio_bell = false;
-    };
-    extraConfig = ''
-      background_opacity 0.85
-    '';
+    server.enable = true;
   };
 
   programs.rofi = {
@@ -85,7 +112,7 @@
       modi = "run,drun,window";
       "icon-theme" = "Oranchelo";
       "show-icons" = true; 
-      terminal = "kitty";
+      terminal = "foot";
       "drun-display-format" = "{icon} {name}";
       "location" = 0;
       "disable-history" = false;
