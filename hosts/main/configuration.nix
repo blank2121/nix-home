@@ -1,16 +1,22 @@
 { config, pkgs, lib, inputs, ... }:
-
-{
-  imports =
-    [
-      ../../modules/default/nixos/audio.nix
-      # removing flatpaks as labymod kinda sucks
-      # ../../modules/default/nixos/flatpaks.nix
-      ../../modules/default/nixos/games.nix
-      ../../modules/default/nixos/nixvim.nix
-      ../../modules/default/nixos/style.nix
-      ./hardware-configuration.nix
-    ];
+let
+  nixFiles = builtins.filter (file: 
+    file != "flatpaks.nix" && 
+    builtins.match ".*\\.nix" file != null) 
+    (builtins.attrNames (builtins.readDir ../../modules/main/nixos));
+  imports = map (file: import ./${file}) nixFiles;
+in {
+  inherit imports;
+  # imports =
+  #   [
+  #     ../../modules/main/nixos/audio.nix
+  #     # removing flatpaks as labymod kinda sucks
+  #     # ../../modules/main/nixos/flatpaks.nix
+  #     ../../modules/main/nixos/games.nix
+  #     ../../modules/main/nixos/nixvim.nix
+  #     ../../modules/main/nixos/style.nix
+  #     ./hardware-configuration.nix
+  #   ];
  
 
   # home-manager
@@ -28,7 +34,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "main"; # Define your hostname.
   networking.extraHosts = ''
     0.0.0.0 log-upload-os.hoyoverse.com
     0.0.0.0 sg-public-data-api.hoyoverse.com
@@ -63,7 +69,8 @@
   # Configure keymap in X11
   services.xserver = {
     enable = true;
-    xkb.layout = "us";
+    xkb.layout = "us,es";
+    xkb.options = "grp:win_space_toggle";
     xkb.variant = "";
     videoDrivers = [ "amdgpu" ]; # Use "modesetting" driver
     screenSection = ''

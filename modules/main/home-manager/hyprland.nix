@@ -1,10 +1,12 @@
 { config, pkgs, lib, ... }:
 let
+  waybarPath = "${config.home.homeDirectory}/myHome/dotfiles/.config/waybar";
+
   startup = pkgs.pkgs.writeShellScriptBin "start" ''
     sleep 0.1
 
-    ${pkgs.swww}/bin/swww init &
-    exec ${pkgs.waybar}/bin/waybar &
+    ${pkgs.swww}/bin/swww-daemon &
+    exec ${pkgs.waybar}/bin/waybar --config ${waybarPath}/config.jsonc --style ${waybarPath}/style.css &
   '';
 
   volumeUp = pkgs.pkgs.writeShellScriptBin "up" ''
@@ -47,7 +49,7 @@ let
   '';
 in {
   imports = [
-    ./apps/waybar.nix
+    # ./apps/waybar.nix
   ];
 
   home.packages = with pkgs; [
@@ -60,10 +62,6 @@ in {
 
   wayland.windowManager.hyprland = {
     enable = true;
-
-    package = pkgs.hyprland.override {
-        debug = true;
-    };
 
     settings = {
       monitor = [
@@ -80,10 +78,10 @@ in {
       };
 
       input = {
-        kb_layout = "us";
+        kb_layout = "us,es";
         kb_variant = "";
         kb_model = "";
-        kb_options = "";
+        kb_options = "grp:win_space_toggle";
         kb_rules = "";
 
         follow_mouse = "1";
@@ -164,6 +162,7 @@ in {
 
       bind = [
         "CTRL SHIFT, S, exec, ${screenshot}/bin/screenshot"
+        "CTRL SHIFT, P, exec, ${pkgs.rofi-pass-wayland}/bin/rofi-pass"
         "$mainMod, RETURN, exec, foot"
         "$mainMod SHIFT, Q, killactive, "
         "$mainMod, E, exec, wlogout"

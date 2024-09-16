@@ -14,32 +14,23 @@ let
   };
   extra = ''
     $env.PATH = ($env.PATH | split row (char esep) | append "$env.HOME/.cargo/bin")
-    $env.PATH = ($env.PATH | split row (char esep) | append "$env.HOME/.julia/packages/LanguageServer/Fwm1f/src/LanguageServer.jl")
-    
-    # starship setup
-    mkdir ~/.cache/starship
-    starship init nu | save -f ~/.cache/starship/init.nu
-    use ~/.cache/starship/init.nu
-
-    # zoxide setup
-    zoxide init nushell | save -f ~/.zoxide.nu
-    source ~/.zoxide.nu
+    $env.PATH = ($env.PATH | split row (char esep) | append "$env.HOME/.julia/packages/LanguageServer/Fwm1f/src/LanguageServer.jl") 
   '';
     # previously in extra
     # eval "$(starship init zsh)"
     # eval "$(zoxide init zsh)"
   envs = {
-    EDITOR = "^nvim";
+    EDITOR = "nvim";
     NIXPKGS_ALLOW_BROKEN = "1";
     NIXPKGS_ALLOW_INSECURE = "1";
     NIXPKGS_ALLOW_UNFREE = "1";
-    STARSHIP_CONFIG="($env.HOME/myHome/dotfiles/.config/starship.toml)";
+    STARSHIP_CONFIG="($env.HOME + \"/myHome/dotfiles/.config/starship.toml\")";
   };
 in {
   programs.nushell = {
     enable = true;
     shellAliases = alias;
     extraEnv = extra;
-    #environmentVariables = envs;
+    environmentVariables = envs;
   };
 }

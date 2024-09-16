@@ -7,13 +7,13 @@
 **Status:** Unfixed; problem avoided.
 
 
-### ⚠️ **[Ueberzugpp](https://github.com/blank2121/nix-home/blob/3371726177041c17d9d6ba4688e519cbf2bf73bb/modules/default/home-manager/clis-apps.nix#L59) fails to compile via CMake**
+### ✔️ **[Ueberzugpp](https://github.com/blank2121/nix-home/blob/3371726177041c17d9d6ba4688e519cbf2bf73bb/modules/default/home-manager/clis-apps.nix#L59) fails to compile via CMake**
 **Details:** When trying to compile `ueberzugpp`, the process fails during the CMake step.
 
 
-**Fix:** Use an older version of Ueberzugpp that works 
+**Fix:** waited until new version was out, and it now works as of 2.9.6.
 
-**Status:** Fixed (but outdated)
+**Status:** Fixed! 
 
 ---
 

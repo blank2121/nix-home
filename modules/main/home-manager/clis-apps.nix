@@ -15,7 +15,7 @@ let
          rev = "04dfd1b4f009eaf0c9753a1267864057800afc92";
      }) {};
 
-     ueberzugpp = zugpppkgs.ueberzugpp;
+     # ueberzugpp = zugpppkgs.ueberzugpp;
      godot_43-stable = godotpkgs.godot_4;
      
 in {
@@ -25,6 +25,7 @@ in {
     allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ 
       "obsidian"
       "remnote"
+      "morgen"
       "spotify"
     ] ++ [godotpkgs.godot_4.getName];
   };
@@ -46,7 +47,6 @@ in {
     glow
     gnumake
     gnupg
-    # godot_4
     gum
     haskellPackages.cabal-install
     haskellPackages.haskell-language-server
@@ -58,8 +58,11 @@ in {
     krita
     libreoffice
     mark
+    morgen
     mprocs
     mpv
+    nh
+    nix-output-monitor
     nmap
     nodejs_20
     obsidian
@@ -67,7 +70,6 @@ in {
     openssl_3
     pandoc
     pango
-    pass
     poetry
     python312Full
     remnote
@@ -78,14 +80,14 @@ in {
     thunderbird-128
     tor-browser
     trash-cli
-    # ueberzugpp
+    ueberzugpp
     vesktop
     vim
     wget
     which
     winetricks
     wireshark
-  ] ++ [ ueberzugpp godot_43-stable ];
+  ] ++ [ godot_43-stable ];
 
   # apps
 

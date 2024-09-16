@@ -25,16 +25,18 @@
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; config.allowUnfree = true; };
     in {
-      nixosConfigurations.default = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./hosts/default/configuration.nix
-          home-manager.nixosModules.default
-          nix-flatpak.nixosModules.nix-flatpak
-          nixos-hardware.nixosModules.asus-zephyrus-ga402x-amdgpu
-          stylix.nixosModules.stylix
-          # lix-module.nixosModules.default
-        ];
+      nixosConfigurations = {
+        main = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs; };
+            modules = [
+              ./hosts/main/configuration.nix
+              home-manager.nixosModules.default
+              nix-flatpak.nixosModules.nix-flatpak
+              nixos-hardware.nixosModules.asus-zephyrus-ga402x-amdgpu
+              stylix.nixosModules.stylix
+              # lix-module.nixosModules.default
+            ];
+        };
       };
     };
 }
