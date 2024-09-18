@@ -1,4 +1,4 @@
-{config, lib, pkgs, inputs, ...}:
+{ pkgs, ...}:
 let 
   coffeeOG = {
     base00 = "#160f0a"; 
@@ -41,7 +41,7 @@ in {
   stylix.polarity = "dark";
   # stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/rose-pine.yaml";
   stylix.base16Scheme = coffeeOG;
-  stylix.image = ../sytlix.png;
+  stylix.image = /home/winston/myHome/modules/main/sytlix.png; 
 
   # cursor
   stylix.cursor = {

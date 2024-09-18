@@ -17,7 +17,6 @@ let
 
      # ueberzugpp = zugpppkgs.ueberzugpp;
      godot_43-stable = godotpkgs.godot_4;
-     
 in {
   # allowing unfree apps
   nixpkgs.config = { 
@@ -61,7 +60,6 @@ in {
     morgen
     mprocs
     mpv
-    nh
     nix-output-monitor
     nmap
     nodejs_20
@@ -110,6 +108,7 @@ in {
   programs.rofi = {
     enable = true;
     package = pkgs.rofi-wayland;
+
     extraConfig = {
       modi = "run,drun,window";
       "icon-theme" = "Oranchelo";

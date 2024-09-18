@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 
 {
   programs.zellij = {
@@ -9,7 +9,7 @@
   home.file = {
     ".config/zellij/" = {
       recursive = true;
-      source = ../../../dotfiles/.config/zellij;
+      source = config.home.homeDirectory + "/myHome/dotfiles/.config/zellij"; 
     };
   };
 }

@@ -13,24 +13,26 @@ let
     zj = "zellij";
   };
   extra = ''
-    $env.PATH = ($env.PATH | split row (char esep) | append "$env.HOME/.cargo/bin")
-    $env.PATH = ($env.PATH | split row (char esep) | append "$env.HOME/.julia/packages/LanguageServer/Fwm1f/src/LanguageServer.jl") 
+    export EDITOR="nvim"
+    export PATH="$HOME/.cargo/bin:$PATH"
+    export PATH="$HOME/.julia/packages/LanguageServer/Fwm1f/src/LanguageServer.jl:$PATH"
+    export NIXPKGS_ALLOW_INSECURE=1
+    export NIXPKGS_ALLOW_BROKEN=1
+    export NIXPKGS_ALLOW_UNFREE=1
+    export STARSHIP_CONFIG=${config.home.homeDirectory}/myHome/dotfiles/.config/starship.toml
+    eval "$(starship init zsh)"
+    eval "$(zoxide init zsh)"
+    eval $(thefuck --alias)
   '';
-    # previously in extra
-    # eval "$(starship init zsh)"
-    # eval "$(zoxide init zsh)"
-  envs = {
-    EDITOR = "nvim";
-    NIXPKGS_ALLOW_BROKEN = "1";
-    NIXPKGS_ALLOW_INSECURE = "1";
-    NIXPKGS_ALLOW_UNFREE = "1";
-    STARSHIP_CONFIG="($env.HOME + \"/myHome/dotfiles/.config/starship.toml\")";
-  };
 in {
-  programs.nushell = {
+  programs.zsh = {
+    autocd = true;
     enable = true;
+    defaultKeymap = "viins";
+    autosuggestion.enable = true;
+    enableCompletion = true;
     shellAliases = alias;
-    extraEnv = extra;
-    environmentVariables = envs;
+    syntaxHighlighting.enable = true;
+    envExtra = extra;
   };
 }

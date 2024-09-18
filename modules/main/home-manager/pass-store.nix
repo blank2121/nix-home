@@ -2,7 +2,6 @@
 
 {
     home.packages = [
-        # pkgs.rofi-pass-wayland
         pkgs.pass
     ];
 

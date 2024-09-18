@@ -39,5 +39,4 @@
   hardware.graphics.extraPackages = [
     pkgs.amdvlk
   ];
-
 }

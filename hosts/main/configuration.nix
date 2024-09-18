@@ -1,30 +1,32 @@
 { config, pkgs, lib, inputs, ... }:
 let
+  dir = ../../modules/main/nixos;
   nixFiles = builtins.filter (file: 
-    file != "flatpaks.nix" && 
+    file != "flatpaks.nix" && # to ignore files
+    file != "games.nix" &&
     builtins.match ".*\\.nix" file != null) 
-    (builtins.attrNames (builtins.readDir ../../modules/main/nixos));
-  imports = map (file: import ./${file}) nixFiles;
+    (builtins.attrNames (builtins.readDir dir));
+  imps = map (file: import "${dir}/${file}") nixFiles ++ [ ./hardware-configuration.nix ];
+
+  #TODO kde; specialised = content: lib.mkIf (config.specialisation !={}) content;
 in {
-  inherit imports;
-  # imports =
-  #   [
-  #     ../../modules/main/nixos/audio.nix
-  #     # removing flatpaks as labymod kinda sucks
-  #     # ../../modules/main/nixos/flatpaks.nix
-  #     ../../modules/main/nixos/games.nix
-  #     ../../modules/main/nixos/nixvim.nix
-  #     ../../modules/main/nixos/style.nix
-  #     ./hardware-configuration.nix
-  #   ];
- 
+  imports = imps;
 
   # home-manager
-  home-manager = {
+  home-manager = #TODO kde; specialised 
+  {
     backupFileExtension = "backup";
-    extraSpecialArgs = { inherit inputs; };
+    extraSpecialArgs = { 
+      inherit inputs;
+      #TODO kde; isHyprland = true; 
+    };
     users = {
       "winston" = import ./home.nix;
+      #TODO kde; 
+      # { 
+      #   inherit config lib pkgs;
+      #   isHyprland = true; 
+      # };
     };
   };
 
@@ -79,35 +81,66 @@ in {
     '';
   };
 
-  programs.hyprland = {
+  programs.hyprland = #TODO kde; specialised 
+  {
     enable = true;
     xwayland.enable = true;
   };
 
   services.displayManager.sddm = {
     enable = true;
-    wayland.enable = true;
+    wayland.enable = #TODO kde; specialised 
+    true;
     enableHidpi = true;
   };
 
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
-  environment.sessionVariables.ELECTRON_OZONE_PLATFORM_HINT = "auto";
+  environment.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
+    ELECTRON_OZONE_PLATFORM_HINT = "auto";
+  };
+
+  # specialisation = {
+  #   kde.configuration = {
+  #     programs.hyprland.enable = false;
+  #     services.displayManager.sddm.wayland.enable = false;
+  #     services.desktopManager.plasma6.enable = true;
+  #     environment.plasma6.excludePackages = with pkgs.kdePackages; [
+  #       konsole
+  #     ];
+  #
+  #     home-manager = {
+  #       backupFileExtension = "backup";
+  #       extraSpecialArgs = { inherit inputs; isHyprland = false; };
+  #       users = {
+  #         "winston" = import ./home.nix {
+  #           inherit config lib pkgs;
+  #           isHyprland = false;
+  #         };
+  #       };
+  #     };
+  #     environment.etc."specialisation".text = "kde";
+  #   };
+  # };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  #programs.zsh.enable = true;
-  users.defaultUserShell = pkgs.nushell;
+  programs.zsh.enable = true;
+  users.defaultUserShell = pkgs.zsh;
   users.users.winston = {
     isNormalUser = true;
     description = "winston";
     extraGroups = [ "networkmanager" "wheel" "audio" ];
-    packages = with pkgs; [ ];
   };
 
   # List packages installed in system profile. To search, run:
   environment.systemPackages = with pkgs; [
-    nushell
     bash
   ];
+
+  # nh configuration
+  programs.nh = {
+    enable = true;
+    flake = "/home/winston/myHome";
+  };
 
   # Printing
   services.printing.enable = true;
@@ -118,6 +151,7 @@ in {
     openFirewall = true;
   };
 
+  # services.power-profiles-daemon.enable = false; 
   services.tlp = {
     enable = true;
     settings = {
@@ -135,30 +169,8 @@ in {
        #Optional helps save long term battery health
        START_CHARGE_THRESH_BAT0 = 40; # 40 and bellow it starts to charge
        STOP_CHARGE_THRESH_BAT0 = 85; # 78 and above it stops charging
-
       };
   };
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.05"; # Did you read the comment?
 }

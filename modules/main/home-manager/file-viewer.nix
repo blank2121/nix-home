@@ -3,7 +3,7 @@
 {
   programs.yazi = {
     enable = true;
-    enableNushellIntegration = true;
+    enableZshIntegration = true;
     keymap = {
       manager = {
         prepend_keymap = [

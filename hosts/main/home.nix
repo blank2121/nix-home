@@ -1,23 +1,14 @@
-{ config, pkgs, ... }:
+{ config, lib, ... }:
 let
+  dir = ../../modules/main/home-manager;
   nixFiles = builtins.filter (file: 
+    # file != "hyprland.nix" &&
     builtins.match ".*\\.nix" file != null) 
-    (builtins.attrNames (builtins.readDir ../../modules/main/home-manager));
-  imports = map (file: import ./${file}) nixFiles;
+    (builtins.attrNames (builtins.readDir dir));
+  imps = map (file: import "${dir}/${file}") nixFiles;
 in {
-  inherit imports;
-  # imports = [
-  #   ../../modules/main/home-manager/clis-apps.nix
-  #   ../../modules/main/home-manager/file-viewer.nix
-  #   ../../modules/main/home-manager/git.nix
-  #   ../../modules/main/home-manager/gpg.nix
-  #   ../../modules/main/home-manager/python-pkgs.nix
-  #   ../../modules/main/home-manager/services.nix
-  #   ../../modules/main/home-manager/sh.nix
-  #   ../../modules/main/home-manager/hyprland.nix
-  #   ../../modules/main/home-manager/zellij.nix
-  #   ../../modules/main/home-manager/pass-store.nix
-  # ];
+  imports = imps;
+
   home = {
     username = "winston";
     homeDirectory = "/home/winston";
@@ -36,7 +27,7 @@ in {
     eza = {
       enable = true;
       icons = true;
-      enableNushellIntegration = true;
+      enableZshIntegration = true;
     };
 
     fzf = {
@@ -50,17 +41,17 @@ in {
 
     starship = {
       enable = true;
-      enableNushellIntegration = true;
+      enableZshIntegration = true;
     };
 
     thefuck = {
       enable = true;
-      enableNushellIntegration = true;
+      enableZshIntegration = true;
     };
 
     zoxide = {
       enable = true;
-      enableNushellIntegration = true;
+      enableZshIntegration = true;
     };
   };
 }
