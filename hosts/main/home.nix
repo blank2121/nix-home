@@ -1,13 +1,14 @@
-{ config, lib, ... }:
+{ inputs, ... }:
 let
   dir = ../../modules/main/home-manager;
   nixFiles = builtins.filter (file: 
-    # file != "hyprland.nix" &&
+    # (isHyprland || file != "hyprland.nix") &&
+    file != "games.nix" &&
     builtins.match ".*\\.nix" file != null) 
     (builtins.attrNames (builtins.readDir dir));
-  imps = map (file: import "${dir}/${file}") nixFiles;
+  imports = map (file: import "${dir}/${file}") nixFiles;
 in {
-  imports = imps;
+  # inherit imports;
 
   home = {
     username = "winston";
@@ -23,35 +24,35 @@ in {
     };
   };
 
-  programs = {
-    eza = {
-      enable = true;
-      icons = true;
-      enableZshIntegration = true;
-    };
-
-    fzf = {
-      enable = true;
-      enableZshIntegration = false;
-    };
-
-    home-manager.enable = true;
-
-    ripgrep.enable = true;
-
-    starship = {
-      enable = true;
-      enableZshIntegration = true;
-    };
-
-    thefuck = {
-      enable = true;
-      enableZshIntegration = true;
-    };
-
-    zoxide = {
-      enable = true;
-      enableZshIntegration = true;
-    };
-  };
+  # programs = {
+  #   eza = {
+  #     enable = true;
+  #     icons = true;
+  #     enableZshIntegration = true;
+  #   };
+  #
+  #    fzf = {
+  #      enable = true;
+  #      enableZshIntegration = false;
+  #    };
+  #
+  #    home-manager.enable = true;
+  #
+  #    ripgrep.enable = true;
+  #
+  #    starship = {
+  #      enable = true;
+  #      enableZshIntegration = true;
+  #    };
+  #
+  #    thefuck = {
+  #      enable = true;
+  #      enableZshIntegration = true;
+  #    };
+  #
+  #    zoxide = {
+  #      enable = true;
+  #      enableZshIntegration = true;
+  #    };
+  #  };
 }
