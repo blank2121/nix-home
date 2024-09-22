@@ -4,9 +4,11 @@ let
 
   startup = pkgs.pkgs.writeShellScriptBin "start" ''
     sleep 0.1
-
-    ${pkgs.swww}/bin/swww-daemon &
     exec ${pkgs.waybar}/bin/waybar --config ${waybarPath}/config.jsonc --style ${waybarPath}/style.css &
+  '';
+
+  wallpaper = pkgs.pkgs.writeShellScriptBin "wallpaper" ''
+    ${pkgs.swww}/bin/swww init
   '';
 
   volumeUp = pkgs.pkgs.writeShellScriptBin "up" ''
@@ -68,7 +70,10 @@ in {
         ",highres,0x0,auto"
         "HDMI-A-1,prefered,auto,1,mirror,eDP-2"
       ];
-      exec-once = ''${startup}/bin/start'';
+      exec-once = [
+        ''${startup}/bin/start''
+        ''${wallpaper}/bin/wallpaper''
+      ];
       env = [
         "XCURSOR_SIZE,24"
         "GDK_SCALE,auto"
@@ -163,11 +168,11 @@ in {
       bind = [
         "CTRL SHIFT, S, exec, ${screenshot}/bin/screenshot"
         "CTRL SHIFT, P, exec, ${pkgs.rofi-pass-wayland}/bin/rofi-pass"
-        "$mainMod, RETURN, exec, foot"
+        "$mainMod, RETURN, exec, kitty"
         "$mainMod SHIFT, Q, killactive, "
         "$mainMod, E, exec, wlogout"
         "$mainMod SHIFT, Space, togglefloating, "
-        "$mainMod, SPACE, exec, rofi -show drun"
+        "$mainMod, SPACE, exec, ${pkgs.rofi-wayland}/bin/rofi -show drun"
 
         "$mainMod, P, pseudo, # dwindle"
         "$mainMod, D, togglesplit, # dwindle"

@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ pkgs, lib, ... }:
 let
      zugpppkgs = import (builtins.fetchGit {
          name = "ueberzugpp";
@@ -90,30 +90,25 @@ in {
   # apps
 
   # ERROR: currently broken
-  # programs.kitty = {
-  #   enable = true;
-  #   settings = {
-  #     enable_audio_bell = false;
-  #   };
-  #   extraConfig = ''
-  #     background_opacity 0.85
-  #   '';
-  # };
-
-  programs.foot = {
+  programs.kitty = {
     enable = true;
-    server.enable = true;
+    settings = {
+      enable_audio_bell = false;
+    };
+    extraConfig = ''
+      background_opacity 0.85
+    '';
   };
+
 
   programs.rofi = {
     enable = true;
-    package = pkgs.rofi-wayland;
 
     extraConfig = {
       modi = "run,drun,window";
       "icon-theme" = "Oranchelo";
       "show-icons" = true; 
-      terminal = "foot";
+      terminal = "kitty";
       "drun-display-format" = "{icon} {name}";
       "location" = 0;
       "disable-history" = false;

@@ -1,36 +1,27 @@
 { config, pkgs, lib, inputs, ... }:
 let
-  dir = ../../modules/main/nixos;
+  dir = ../../modules/nixos;
   nixFiles = builtins.filter (file: 
     file != "flatpaks.nix" && # to ignore files
     file != "games.nix" &&
     builtins.match ".*\\.nix" file != null) 
     (builtins.attrNames (builtins.readDir dir));
   imps = map (file: import "${dir}/${file}") nixFiles ++ [ ./hardware-configuration.nix ];
-
-  #TODO kde; specialised = content: lib.mkIf (config.specialisation !={}) content;
 in {
   imports = imps;
 
+  nix.settings.experimental-features = "nix-command flakes";
+
   # home-manager
-  home-manager = #TODO kde; specialised 
-  {
+  home-manager.useGlobalPkgs = true;
+  home-manager.useUserPackages = true;
+  home-manager = {
     backupFileExtension = "backup";
     extraSpecialArgs = { 
       inherit inputs;
-      #TODO kde; isHyprland = true; 
     };
-    users = {
-      "winston" = import ./home.nix;
-      #TODO kde; 
-      # { 
-      #   inherit config lib pkgs;
-      #   isHyprland = true; 
-      # };
-    };
+    users."winston" = import ./home.nix;
   };
-
-  nix.settings.experimental-features = "nix-command flakes";
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -81,16 +72,24 @@ in {
     '';
   };
 
-  programs.hyprland = #TODO kde; specialised 
-  {
+  programs.hyprland = {
     enable = true;
     xwayland.enable = true;
   };
 
+  services.xserver.desktopManager.budgie.enable = true;
+  environment.budgie.excludePackages = with pkgs; [
+    mate.mate-calc
+    vlc
+    mate.pluma
+    mate.eom
+    mate.engrampa
+    mate.atril
+    gnome.rygel
+  ];
   services.displayManager.sddm = {
     enable = true;
-    wayland.enable = #TODO kde; specialised 
-    true;
+    wayland.enable = true;
     enableHidpi = true;
   };
 
@@ -98,29 +97,6 @@ in {
     NIXOS_OZONE_WL = "1";
     ELECTRON_OZONE_PLATFORM_HINT = "auto";
   };
-
-  # specialisation = {
-  #   kde.configuration = {
-  #     programs.hyprland.enable = false;
-  #     services.displayManager.sddm.wayland.enable = false;
-  #     services.desktopManager.plasma6.enable = true;
-  #     environment.plasma6.excludePackages = with pkgs.kdePackages; [
-  #       konsole
-  #     ];
-  #
-  #     home-manager = {
-  #       backupFileExtension = "backup";
-  #       extraSpecialArgs = { inherit inputs; isHyprland = false; };
-  #       users = {
-  #         "winston" = import ./home.nix {
-  #           inherit config lib pkgs;
-  #           isHyprland = false;
-  #         };
-  #       };
-  #     };
-  #     environment.etc."specialisation".text = "kde";
-  #   };
-  # };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   programs.zsh.enable = true;
