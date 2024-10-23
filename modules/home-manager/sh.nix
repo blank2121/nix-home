@@ -1,16 +1,17 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 let
   alias = {
     bt = "bluetoothctl";
     mpv = "flatpak run io.mpv.Mpv";
-    notify-send = "dunstify";
-    nv = "nvim";
+    nv = "${inputs.nixvim.packages.${pkgs.system}.default}/bin/nvim";
+    wr = "${inputs.writer.packages.${pkgs.system}.default}/bin/nvim";
     rm = "trash-put";
     cd = "z";
     times = "sudo -E timeshift-gtk";
     wallpaper = "nix run ~/shells/#random-wallpaper ~/Pictures/wallpaper/";
     zj = "zellij";
+    ls = "eza --icons=always";
   };
   extra = ''
     export EDITOR="nvim"

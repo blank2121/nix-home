@@ -41,7 +41,7 @@ in {
   stylix.polarity = "dark";
   # stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/rose-pine.yaml";
   stylix.base16Scheme = coffeeOG;
-  stylix.image = /home/winston/myHome/modules/main/sytlix.png; 
+  stylix.image = /home/winston/myHome/modules/sytlix.png;
 
   # cursor
   stylix.cursor = {

@@ -1,18 +1,18 @@
-{ config, pkgs, lib, inputs, ... }:
-let
-  dir = ../../modules/nixos;
-  nixFiles = builtins.filter (file: 
-    file != "flatpaks.nix" && # to ignore files
-    file != "games.nix" &&
-    builtins.match ".*\\.nix" file != null) 
-    (builtins.attrNames (builtins.readDir dir));
-  imps = map (file: import "${dir}/${file}") nixFiles ++ [ ./hardware-configuration.nix ];
-in {
-  imports = imps;
+{ config, pkgs, inputs, ... }:
+{
+  imports = [ ../../modules/nixos ./hardware-configuration.nix];
 
   nix.settings.experimental-features = "nix-command flakes";
+  
+  # custom modules
+
+  games.enable = false;
+  wayland.enable = true;
+  hyprland.enable = false;
+  niri.enable = true;
 
   # home-manager
+
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
   home-manager = {
@@ -20,7 +20,9 @@ in {
     extraSpecialArgs = { 
       inherit inputs;
     };
-    users."winston" = import ./home.nix;
+    users."winston".imports = [
+      ./home.nix
+    ];
   };
 
   # Bootloader.
@@ -59,40 +61,6 @@ in {
     LC_TIME = "en_US.UTF-8";
   };
 
-  # Configure keymap in X11
-  services.xserver = {
-    enable = true;
-    xkb.layout = "us,es";
-    xkb.options = "grp:win_space_toggle";
-    xkb.variant = "";
-    videoDrivers = [ "amdgpu" ]; # Use "modesetting" driver
-    screenSection = ''
-      Option "UseEdid" "false"
-      Option "PreferredMode" "2560x1600"
-    '';
-  };
-
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-  };
-
-  services.xserver.desktopManager.budgie.enable = true;
-  environment.budgie.excludePackages = with pkgs; [
-    mate.mate-calc
-    vlc
-    mate.pluma
-    mate.eom
-    mate.engrampa
-    mate.atril
-    gnome.rygel
-  ];
-  services.displayManager.sddm = {
-    enable = true;
-    wayland.enable = true;
-    enableHidpi = true;
-  };
-
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
     ELECTRON_OZONE_PLATFORM_HINT = "auto";
@@ -111,12 +79,6 @@ in {
   environment.systemPackages = with pkgs; [
     bash
   ];
-
-  # nh configuration
-  programs.nh = {
-    enable = true;
-    flake = "/home/winston/myHome";
-  };
 
   # Printing
   services.printing.enable = true;

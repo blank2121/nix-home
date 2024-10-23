@@ -1,44 +1,50 @@
-{ pkgs, lib, ... }:
+{ config, pkgs, lib, ... }:
 let
-     zugpppkgs = import (builtins.fetchGit {
-         name = "ueberzugpp";
-         url = "https://github.com/NixOS/nixpkgs/";
-         ref = "refs/heads/nixpkgs-unstable";
-         rev = "0c19708cf035f50d28eb4b2b8e7a79d4dc52f6bb";
-     }) {};
-
-     godotpkgs = import (builtins.fetchGit {
+    godotpkgs = import (builtins.fetchGit {
          name = "godot_4";
          url = "https://github.com/NixOS/nixpkgs/";
          ref = "refs/heads/nixpkgs-unstable";
          allRefs = true;
          rev = "04dfd1b4f009eaf0c9753a1267864057800afc92";
      }) {};
-
-     # ueberzugpp = zugpppkgs.ueberzugpp;
-     godot_43-stable = godotpkgs.godot_4;
+    gui-apps = with pkgs; [
+        wireshark
+        winetricks
+        vesktop
+        ueberzugpp
+        tor-browser
+        thunderbird-128
+        spotify
+        remnote
+        obsidian
+        mpv
+        morgen
+        libreoffice
+        krita
+        komikku
+        jan
+        foliate
+        firefox
+        brightnessctl
+     ] ++ [ godotpkgs.godot_4 ];
 in {
-  # allowing unfree apps
-  nixpkgs.config = { 
-    allowUnfree = true;
-    allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ 
-      "obsidian"
-      "remnote"
-      "morgen"
-      "spotify"
-    ] ++ [godotpkgs.godot_4.getName];
+  options = {
+    gui.enable = lib.mkOption {
+      default = true;
+      description = ''
+        weather to enable any apps or clis that use guis
+      '';
+    };
   };
-
+  config = {
   home.packages = with pkgs; [
     # ntfy
     # ansel
     bacon
     bat
     bottom
-    brightnessctl
     btrfs-progs
     fd
-    firefox
     fzf
     gcc
     gh
@@ -50,48 +56,31 @@ in {
     haskellPackages.cabal-install
     haskellPackages.haskell-language-server
     hplip
-    jan
     jq
     julia
-    komikku
-    krita
-    libreoffice
     mark
-    morgen
     mprocs
-    mpv
     nix-output-monitor
     nmap
     nodejs_20
-    obsidian
     openjdk
     openssl_3
     pandoc
     pango
     poetry
     python312Full
-    remnote
-    ripgrep
+    ripgrep-all
     rustup
-    spotify
     texliveFull
-    thunderbird-128
-    tor-browser
     trash-cli
-    ueberzugpp
-    vesktop
     vim
     wget
     which
-    winetricks
-    wireshark
-  ] ++ [ godot_43-stable ];
+  ] ++ (if config.gui.enable then gui-apps else []);
 
   # apps
-
-  # ERROR: currently broken
   programs.kitty = {
-    enable = true;
+    enable = config.gui.enable;
     settings = {
       enable_audio_bell = false;
     };
@@ -102,7 +91,7 @@ in {
 
 
   programs.rofi = {
-    enable = true;
+    enable = config.gui.enable;
 
     extraConfig = {
       modi = "run,drun,window";
@@ -140,5 +129,6 @@ in {
       rust-analyzer
       marksman
     ];
+  };
   };
 }

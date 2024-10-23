@@ -1,35 +1,39 @@
-{ config, pkgs, lib, inputs, ... }:
+{ config, pkgs, lib, ... }:
 let
   #Honkai Star Rail
   aagl-gtk-on-nix = import (builtins.fetchTarball {
     url = "https://github.com/ezKEa/aagl-gtk-on-nix/archive/main.tar.gz";
-    sha256 = "023yqdxs83cxx39kl7cawwyr39c1qnnv4n99igpsm2a5yay3wmsa";
+    sha256 = "1v9jk4j0zylx3ixwk5q8z22v6ir86pk9lfbf5q3ibgaggpf8kqa7";
   });
 in
 {
+  options = {
+    games.enable = lib.mkOption {
+      default = false;
+    };
+  };
+  
   imports = [
     aagl-gtk-on-nix.module
   ];
 
+  config = let
+    on = config.games.enable;
+  in {
+
   # one off games/apps
-  programs.honkers-railway-launcher.enable = true;
+  programs.honkers-railway-launcher.enable = on; 
 
   # steam gaming
-
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-    "steam"
-    "steam-original"
-    "steam-run"
-  ];
 
   environment.sessionVariables = {
     STEAM_EXTRA_COMPACT_TOOL_PATHS = "/home/winston/.steam/root/compatibilitytools.d";
   };
 
-  programs.steam.enable = true;
-  programs.steam.gamescopeSession.enable = true;
+  programs.steam.enable = on;
+  programs.steam.gamescopeSession.enable = on;
   
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = with pkgs; (if on then [
     mangohud
     protonup
     r2modman
@@ -37,7 +41,8 @@ in
     # emulators
     ryujinx
     melonDS
-  ];
+  ] else []);
 
-  programs.gamemode.enable = true;
+  programs.gamemode.enable = on;
+  };
 }

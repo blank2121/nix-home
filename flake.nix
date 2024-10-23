@@ -17,23 +17,31 @@
     #   url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.0.tar.gz";
     #   inputs.nixpkgs.follows = "nixpkgs";
     # };
+    niri.url = "github:sodiboo/niri-flake";
+    writer.url = "path:/home/winston/writer/";
   };
 
-  # home-manager, lix-module, nix-flatpak
-  outputs = { self, home-manager, nix-flatpak, 
+  outputs = { self, home-manager, niri, nix-flatpak, 
   nixos-hardware, nixpkgs, stylix, ... }@inputs:
     let 
       system = "x86_64-linux";
-      pkgs = import nixpkgs { inherit system; config.allowUnfree = true; };
+      pkgs = import nixpkgs { 
+        inherit system;
+        config.allowUnfree = true;
+        overlays = [
+          niri.overlays.niri
+        ];
+      };
     in {
       nixosConfigurations = {
         main = nixpkgs.lib.nixosSystem {
+          inherit pkgs;
           specialArgs = { inherit inputs; };
           modules = [
             ./hosts/main/configuration.nix
             home-manager.nixosModules.default
-            nix-flatpak.nixosModules.nix-flatpak
             nixos-hardware.nixosModules.asus-zephyrus-ga402x-amdgpu
+            niri.nixosModules.niri
             stylix.nixosModules.stylix
             # lix-module.nixosModules.default
           ];

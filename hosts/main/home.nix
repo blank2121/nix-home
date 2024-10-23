@@ -1,14 +1,12 @@
-{ inputs, ... }:
-let
-  dir = ../../modules/home-manager;
-  nixFiles = builtins.filter (file: 
-    # (isHyprland || file != "hyprland.nix") &&
-    file != "games.nix" &&
-    builtins.match ".*\\.nix" file != null) 
-    (builtins.attrNames (builtins.readDir dir));
-  imports = map (file: import "${dir}/${file}") nixFiles;
-in {
-  inherit imports;
+{ hyprland, ... }:
+{
+  imports = [ 
+    ../../modules/home-manager
+  ];
+
+  # custom modules
+  gui.enable = true;
+  photography.enable = true;
 
   home = {
     username = "winston";
