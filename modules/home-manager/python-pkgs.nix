@@ -1,5 +1,4 @@
 { config, pkgs, ... }:
-
 {
   home.packages = with pkgs.python312Packages; [
     # dataset
@@ -9,5 +8,5 @@
     scikit-learn
     seaborn
     chromadb
-  ]; 
+  ];
 }

@@ -1,6 +1,6 @@
-{ hyprland, ... }:
+{ ... }:
 {
-  imports = [ 
+  imports = [
     ../../modules/home-manager
   ];
 
@@ -29,27 +29,27 @@
       enableZshIntegration = true;
     };
 
-     fzf = {
-       enable = true;
-       enableZshIntegration = false;
-     };
+    fzf = {
+      enable = true;
+      enableZshIntegration = false;
+    };
 
-     home-manager.enable = true;
+    home-manager.enable = true;
 
-     ripgrep.enable = true;
-     starship = {
-       enable = true;
-       enableZshIntegration = true;
-     };
+    ripgrep.enable = true;
+    starship = {
+      enable = true;
+      enableZshIntegration = true;
+    };
 
-     thefuck = {
-       enable = true;
-       enableZshIntegration = true;
-     };
+    thefuck = {
+      enable = true;
+      enableZshIntegration = true;
+    };
 
-     zoxide = {
-       enable = true;
-       enableZshIntegration = true;
-     };
-   };
+    zoxide = {
+      enable = true;
+      enableZshIntegration = true;
+    };
+  };
 }

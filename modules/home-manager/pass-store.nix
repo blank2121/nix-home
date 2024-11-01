@@ -1,9 +1,8 @@
 { pkgs, ... }:
-
 {
-    home.packages = [
-        pkgs.pass
-    ];
+  home.packages = [
+    pkgs.pass
+  ];
 
-    programs.password-store.enable = true; 
+  programs.password-store.enable = true;
 }

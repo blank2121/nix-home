@@ -1,4 +1,10 @@
-{ config, lib, pkgs, inputs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
   # Enable audio
@@ -14,7 +20,7 @@
       jack.enable = true;
     };
   };
- 
+
   environment.systemPackages = with pkgs; [
     alsa-utils
   ];

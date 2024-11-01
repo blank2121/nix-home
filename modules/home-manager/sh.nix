@@ -1,5 +1,9 @@
-{ config, pkgs, inputs, ... }:
-
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 let
   alias = {
     bt = "bluetoothctl";
@@ -25,7 +29,8 @@ let
     eval "$(zoxide init zsh)"
     eval $(thefuck --alias)
   '';
-in {
+in
+{
   programs.zsh = {
     autocd = true;
     enable = true;

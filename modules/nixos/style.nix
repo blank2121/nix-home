@@ -1,21 +1,26 @@
-{ pkgs, ...}:
-let 
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+let
   coffeeOG = {
-    base00 = "#160f0a"; 
-    base01 = "#281b12"; 
-    base02 = "#312217"; 
-    base03 = "#6e6a86"; 
-    base04 = "#908caa"; 
-    base05 = "#efded1"; 
-    base06 = "#efded1"; 
-    base07 = "#524f67"; 
-    base08 = "#eb6f92"; 
-    base09 = "#f6c177"; 
-    base0A = "#ebbcba"; 
-    base0B = "#31748f"; 
-    base0C = "#9ccfd8"; 
-    base0D = "#c4a7e7"; 
-    base0E = "#f6c177"; 
+    base00 = "#160f0a";
+    base01 = "#281b12";
+    base02 = "#312217";
+    base03 = "#6e6a86";
+    base04 = "#908caa";
+    base05 = "#efded1";
+    base06 = "#efded1";
+    base07 = "#524f67";
+    base08 = "#eb6f92";
+    base09 = "#f6c177";
+    base0A = "#ebbcba";
+    base0B = "#31748f";
+    base0C = "#9ccfd8";
+    base0D = "#c4a7e7";
+    base0E = "#f6c177";
     base0F = "#524f67";
   };
   coffeeFall = {
@@ -36,12 +41,27 @@ let
     base0E = "#5b4539";
     base0F = "#7f6053";
   };
-in {
+in
+{
   stylix.enable = true;
   stylix.polarity = "dark";
-  # stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/rose-pine.yaml";
-  stylix.base16Scheme = coffeeOG;
-  stylix.image = /home/winston/myHome/modules/sytlix.png;
+  stylix.base16Scheme = lib.mkDefault coffeeOG;
+
+  specialisation = {
+    kanagawa.configuration = {
+      stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/kanagawa.yaml";
+    };
+
+    rose-pine.configuration = {
+      stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/rose-pine.yaml";
+    };
+
+    gruvbox-dark-soft.configuration = {
+      stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-soft.yaml";
+    };
+  };
+
+  stylix.image = config.lib.stylix.pixel "base0A";
 
   # cursor
   stylix.cursor = {
@@ -106,12 +126,18 @@ in {
       noto-fonts-cjk
       noto-fonts-emoji
       liberation_ttf
-      (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" "JetBrainsMono" ]; })
+      (nerdfonts.override {
+        fonts = [
+          "FiraCode"
+          "DroidSansMono"
+          "JetBrainsMono"
+        ];
+      })
       fira-code-symbols
       mplus-outline-fonts.githubRelease
       dina-font
       proggyfonts
-      liberation_ttf 
+      liberation_ttf
       google-fonts
     ];
   };
