@@ -1,25 +1,13 @@
 { config, lib, ... }:
 {
   imports = [
-    ./niri.nix
-    ./hyprland.nix
-
-    # wayland shared utils
-
-    # add it so when wayland is disabled, these are not loaded
     ./swaylock.nix
     ./swaync.nix
     ./waybar.nix
     ./wlogout.nix
   ];
 
-  options = {
-    wayland.enable = lib.mkOption {
-      default = true;
-    };
-  };
 
-  config = {
     # Configure keymap in X11
     services.xserver = {
       enable = true;
@@ -40,8 +28,7 @@
 
     services.displayManager.sddm = {
       enable = true;
-      wayland.enable = config.wayland.enable;
+      wayland.enable = true;
       enableHidpi = true;
     };
-  };
 }

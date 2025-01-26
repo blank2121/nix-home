@@ -14,25 +14,13 @@ let
   );
 in
 {
-  options = {
-    games.enable = lib.mkOption {
-      default = false;
-    };
-  };
-
   imports = [
     aagl-gtk-on-nix.module
   ];
 
-  config =
-    let
-      on = config.games.enable;
-    in
-    {
-
       # one off games/apps
       # override for hsr to not install
-      programs.honkers-railway-launcher.enable = on && false;
+      programs.honkers-railway-launcher.enable = false;
 
       # steam gaming
 
@@ -40,15 +28,11 @@ in
         STEAM_EXTRA_COMPACT_TOOL_PATHS = "/home/winston/.steam/root/compatibilitytools.d";
       };
 
-      programs.steam.enable = on;
-      programs.steam.gamescopeSession.enable = on;
+      programs.steam.enable = true;
+      programs.steam.gamescopeSession.enable = true;
 
       # games + packages
-      environment.systemPackages =
-        with pkgs;
-        (
-          if on then
-            [
+      environment.systemPackages = with pkgs; [
               # games
               polymc
 
@@ -60,11 +44,7 @@ in
               # emulators
               ryujinx
               melonDS
-            ]
-          else
-            [ ]
-        );
+            ];
 
-      programs.gamemode.enable = on;
-    };
+      programs.gamemode.enable = true;
 }

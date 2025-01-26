@@ -56,13 +56,6 @@ let
   '';
 in
 {
-  options = {
-    niri.enable = lib.mkOption {
-      default = false;
-    };
-  };
-
-  config = {
     environment.systemPackages = with pkgs; [
       cage
       wayland-utils
@@ -72,7 +65,7 @@ in
 
     # niri config 
     systemd.user.services.niri-flake-polkit.enable = false;
-    programs.niri.enable = config.niri.enable;
+    programs.niri.enable = true;
     home-manager.users.winston.programs.niri = {
       package = pkgs.niri-stable;
       settings = {
@@ -179,5 +172,4 @@ in
           };
       };
     };
-  };
 }

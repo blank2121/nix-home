@@ -1,8 +1,8 @@
 { pkgs, config, ... }:
 {
   home-manager.users.winston.programs.waybar = {
-    enable = config.wayland.enable;
-    systemd.enable = config.wayland.enable;
+    enable = true;
+    systemd.enable = true;
     settings = {
       mainBar = {
         layer = "top";

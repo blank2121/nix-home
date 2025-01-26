@@ -1,16 +1,8 @@
-{ ... }:
+{ config, username, ... }:
 {
-  imports = [
-    ../../modules/home-manager
-  ];
-
-  # custom modules
-  gui.enable = true;
-  photography.enable = true;
-
   home = {
-    username = "winston";
-    homeDirectory = "/home/winston";
+    username = "${username}";
+    homeDirectory = "/home/${username}";
 
     stateVersion = "24.05";
 
@@ -25,7 +17,7 @@
   programs = {
     eza = {
       enable = true;
-      icons = true;
+      icons = "auto";
       enableZshIntegration = true;
     };
 

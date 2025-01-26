@@ -5,12 +5,6 @@
   ...
 }:
 let
-  # waybarPath = "${config.home.homeDirectory}/myHome/dotfiles/.config/waybar";
-  #
-  # startup = pkgs.pkgs.writeShellScriptBin "start" ''
-  #   exec ${pkgs.waybar}/bin/waybar &
-  # '';
-
   wallpaper = pkgs.pkgs.writeShellScriptBin "wallpaper" ''
     ${pkgs.swww}/bin/swww init
   '';
@@ -55,15 +49,8 @@ let
   '';
 in
 {
-  options = {
-    hyprland.enable = lib.mkOption {
-      default = true;
-    };
-  };
-
-  config = {
     programs.hyprland = {
-      enable = config.hyprland.enable;
+      enable = true;
       xwayland.enable = true;
     };
     home-manager.users.winston.home.packages = with pkgs; [
@@ -72,8 +59,28 @@ in
       wl-clipboard
     ];
 
+    home-manager.users.winston.programs.rofi = {
+      enable = true; 
+
+      extraConfig = {
+        modi = "run,drun,window";
+        "icon-theme" = "Oranchelo";
+        "show-icons" = true;
+        terminal = "kitty";
+        "drun-display-format" = "{icon} {name}";
+        "location" = 0;
+        "disable-history" = false;
+        "hide-scrollbar" = true;
+        "display-drun" = "   Apps ";
+        "display-run" = "   Run ";
+        "display-window" = " 󱇙  Window";
+        "display-Network" = " 󰤨  Network";
+        "sidebar-mode" = true;
+      };
+    };
+
     home-manager.users.winston.wayland.windowManager.hyprland = {
-      enable = config.hyprland.enable;
+      enable = true;
 
       settings = {
         monitor = [
@@ -235,5 +242,4 @@ in
         ];
       };
     };
-  };
 }

@@ -4,42 +4,11 @@
   inputs,
   ...
 }:
-let
-username = "winston";
-hostname = "main";
-in {
-  imports = [
-    ../../modules/nixos
-  ];
-
-  nix.settings.experimental-features = "nix-command flakes";
-
-  # custom modules
-
-  games.enable = false;
-  wayland.enable = true;
-  hyprland.enable = false;
-  niri.enable = true;
-
-  # home-manager
-
-  home-manager.useGlobalPkgs = true;
-  home-manager.useUserPackages = true;
-  home-manager = {
-    backupFileExtension = "backup";
-    extraSpecialArgs = {
-      inherit inputs;
-    };
-    users."${username}".imports = [
-      ./home.nix
-    ];
-  };
-
+{
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = hostname;
   networking.extraHosts = ''
     0.0.0.0 log-upload-os.hoyoverse.com
     0.0.0.0 sg-public-data-api.hoyoverse.com
@@ -68,24 +37,6 @@ in {
     LC_PAPER = "en_US.UTF-8";
     LC_TELEPHONE = "en_US.UTF-8";
     LC_TIME = "en_US.UTF-8";
-  };
-
-  # environment.sessionVariables = {
-  #   NIXOS_OZONE_WL = "1";
-  #   ELECTRON_OZONE_PLATFORM_HINT = "auto";
-  # };
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  programs.zsh.enable = true;
-  users.defaultUserShell = pkgs.zsh;
-  users.users."${username}" = {
-    isNormalUser = true;
-    description = "winston";
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-      "audio"
-    ];
   };
 
   # List packages installed in system profile. To search, run:

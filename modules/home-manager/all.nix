@@ -1,7 +1,8 @@
 { ... }:
 {
   imports = [
-    ./clis-apps.nix
+    ./clis.nix
+    ./guis.nix
     ./file-viewer.nix
     ./gammastep.nix
     ./git.nix
