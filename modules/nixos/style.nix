@@ -45,21 +45,8 @@ in
 {
   stylix.enable = true;
   stylix.polarity = "dark";
-  stylix.base16Scheme = lib.mkDefault coffeeOG;
-
-  specialisation = {
-    kanagawa.configuration = {
-      stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/kanagawa.yaml";
-    };
-
-    rose-pine.configuration = {
-      stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/rose-pine.yaml";
-    };
-
-    gruvbox-dark-soft.configuration = {
-      stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-soft.yaml";
-    };
-  };
+  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/kanagawa.yaml";
+  #rose-pine, gruvbox-dark-soft
 
   stylix.image = config.lib.stylix.pixel "base0A";
 
@@ -73,17 +60,17 @@ in
   # fonts
   stylix.fonts = {
     serif = {
-      package = (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; });
+      package = pkgs.nerd-fonts.jetbrains-mono;
       name = "JetBrainsMono Nerd Font";
     };
 
     sansSerif = {
-      package = (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; });
+      package = pkgs.nerd-fonts.jetbrains-mono;
       name = "JetBrainsMono Nerd Font";
     };
 
     monospace = {
-      package = (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; });
+      package = pkgs.nerd-fonts.jetbrains-mono;
       name = "JetBrainsMono Nerd Font";
     };
 
@@ -123,16 +110,12 @@ in
       # Persian Font
       vazir-fonts
       noto-fonts
-      noto-fonts-cjk
+      noto-fonts-cjk-sans
       noto-fonts-emoji
       liberation_ttf
-      (nerdfonts.override {
-        fonts = [
-          "FiraCode"
-          "DroidSansMono"
-          "JetBrainsMono"
-        ];
-      })
+      nerd-fonts.fira-code
+      nerd-fonts.droid-sans-mono
+      nerd-fonts.jetbrains-mono
       fira-code-symbols
       mplus-outline-fonts.githubRelease
       dina-font

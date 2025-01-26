@@ -9,27 +9,26 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-flatpak.url = "github:gmodena/nix-flatpak";
     nixos-hardware.url = "github:Nixos/nixos-hardware/master";
-    nixvim.url = "github:blank2121/nixvim";
+    nixvim.url = "path:/home/winston/nixvim/";
+    polymc.url = "github:PolyMC/PolyMC";
     stylix.url = "github:danth/stylix";
-    # lix-module = {
-    #   url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.0.tar.gz";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
     niri.url = "github:sodiboo/niri-flake";
     writer.url = "path:/home/winston/writer/";
   };
 
-  outputs = { self, home-manager, niri, nix-flatpak, 
+  outputs = { self, home-manager, polymc, niri,
   nixos-hardware, nixpkgs, stylix, ... }@inputs:
     let 
       system = "x86_64-linux";
       pkgs = import nixpkgs { 
         inherit system;
         config.allowUnfree = true;
+        config.allowBroken = true;
+        nix.package = pkgs.nixVersions.unstable;
         overlays = [
           niri.overlays.niri
+          polymc.overlay
         ];
       };
     in {
@@ -39,11 +38,11 @@
           specialArgs = { inherit inputs; };
           modules = [
             ./hosts/main/configuration.nix
+            ./hosts/main/hardware-configuration.nix
             home-manager.nixosModules.default
-            nixos-hardware.nixosModules.asus-zephyrus-ga402x-amdgpu
             niri.nixosModules.niri
+            nixos-hardware.nixosModules.asus-zephyrus-ga402x-amdgpu
             stylix.nixosModules.stylix
-            # lix-module.nixosModules.default
           ];
         };
       };

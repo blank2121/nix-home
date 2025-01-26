@@ -4,10 +4,12 @@
   inputs,
   ...
 }:
-{
+let
+username = "winston";
+hostname = "main";
+in {
   imports = [
     ../../modules/nixos
-    ./hardware-configuration.nix
   ];
 
   nix.settings.experimental-features = "nix-command flakes";
@@ -28,7 +30,7 @@
     extraSpecialArgs = {
       inherit inputs;
     };
-    users."winston".imports = [
+    users."${username}".imports = [
       ./home.nix
     ];
   };
@@ -37,12 +39,11 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "main"; # Define your hostname.
+  networking.hostName = hostname;
   networking.extraHosts = ''
     0.0.0.0 log-upload-os.hoyoverse.com
     0.0.0.0 sg-public-data-api.hoyoverse.com
   '';
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # bluetooth setup
   hardware.bluetooth.enable = true; # enables support for Bluetooth
@@ -69,15 +70,15 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  environment.sessionVariables = {
-    NIXOS_OZONE_WL = "1";
-    ELECTRON_OZONE_PLATFORM_HINT = "auto";
-  };
+  # environment.sessionVariables = {
+  #   NIXOS_OZONE_WL = "1";
+  #   ELECTRON_OZONE_PLATFORM_HINT = "auto";
+  # };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
-  users.users.winston = {
+  users.users."${username}" = {
     isNormalUser = true;
     description = "winston";
     extraGroups = [
@@ -118,9 +119,9 @@
 
       #Optional helps save long term battery health
       START_CHARGE_THRESH_BAT0 = 40; # 40 and bellow it starts to charge
-      STOP_CHARGE_THRESH_BAT0 = 85; # 78 and above it stops charging
+      STOP_CHARGE_THRESH_BAT0 = 85; # 85 and above it stops charging
     };
   };
 
-  system.stateVersion = "24.05"; # Did you read the comment?
+  system.stateVersion = "23.11"; # Did you read the comment?
 }

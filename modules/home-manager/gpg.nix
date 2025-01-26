@@ -6,4 +6,11 @@
     enableExtraSocket = true;
     enableSshSupport = true;
   };
+
+  programs.gpg = {
+    enable = true;
+    publicKeys = [
+        { source = /home/winston/myHome/gpg-key/subkey.pub; trust = 5; }
+    ];
+  };
 }

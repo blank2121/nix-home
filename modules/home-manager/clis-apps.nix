@@ -15,24 +15,22 @@ let
   gui-apps =
     with pkgs;
     [
-      wireshark
-      winetricks
-      vesktop
-      ueberzugpp
-      tor-browser
-      thunderbird-128
-      spotify
-      remnote
-      obsidian
-      mpv
-      morgen
-      libreoffice
-      krita
-      komikku
-      jan
-      foliate
-      firefox
+      # morgen
       brightnessctl
+      firefox
+      foliate
+      komikku
+      krita
+      libreoffice
+      mpv
+      obsidian
+      remnote
+      spotify
+      thunderbird-128
+      tor-browser
+      ueberzugpp
+      vesktop
+      winetricks
     ]
     ++ [ godotpkgs.godot_4 ];
 in
@@ -53,7 +51,7 @@ in
         # ansel
         bacon
         bat
-        bottom
+        btop
         btrfs-progs
         fd
         fzf
@@ -66,6 +64,7 @@ in
         gum
         haskellPackages.cabal-install
         haskellPackages.haskell-language-server
+        haskellPackages.stack
         hplip
         jq
         julia

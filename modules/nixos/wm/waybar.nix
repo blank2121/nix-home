@@ -84,7 +84,7 @@
         };
 
         "custom/spotify" = {
-          exec = "${pkgs.playerctl}/bin/playerctl status --player=spotify";
+          exec = "echo ; echo \"Playing $(${pkgs.playerctl}/bin/playerctl metadata title --player=spotify) by $(${pkgs.playerctl}/bin/playerctl metadata artist --player=spotify)\"";
           format = " {}";
           on-click = "${pkgs.playerctl}/bin/playerctl play-pause --player=spotify";
           on-click-right = "${pkgs.playerctl}/bin/playerctl next --player spotify";

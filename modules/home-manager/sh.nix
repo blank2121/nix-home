@@ -28,6 +28,7 @@ let
     eval "$(starship init zsh)"
     eval "$(zoxide init zsh)"
     eval $(thefuck --alias)
+    ${pkgs.nitch}/bin/nitch 
   '';
 in
 {

@@ -9,7 +9,7 @@ let
   aagl-gtk-on-nix = import (
     builtins.fetchTarball {
       url = "https://github.com/ezKEa/aagl-gtk-on-nix/archive/main.tar.gz";
-      sha256 = "1v9jk4j0zylx3ixwk5q8z22v6ir86pk9lfbf5q3ibgaggpf8kqa7";
+      sha256 = "0v59frhfnyy7pbmbv7bdzssdp554bjsgmmm4dw31p5askysmlvib";
     }
   );
 in
@@ -31,7 +31,8 @@ in
     {
 
       # one off games/apps
-      programs.honkers-railway-launcher.enable = on;
+      # override for hsr to not install
+      programs.honkers-railway-launcher.enable = on && false;
 
       # steam gaming
 
@@ -42,11 +43,16 @@ in
       programs.steam.enable = on;
       programs.steam.gamescopeSession.enable = on;
 
+      # games + packages
       environment.systemPackages =
         with pkgs;
         (
           if on then
             [
+              # games
+              polymc
+
+              # tools
               mangohud
               protonup
               r2modman

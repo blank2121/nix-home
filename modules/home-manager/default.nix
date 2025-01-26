@@ -3,6 +3,7 @@
   imports = [
     ./clis-apps.nix
     ./file-viewer.nix
+    ./gammastep.nix
     ./git.nix
     ./gpg.nix
     ./pass-store.nix

@@ -2,9 +2,10 @@
 {
   imports = [
     ./audio.nix
-    ./wm
     ./games.nix
+    # ./llms.nix
     ./nixvim.nix
     ./style.nix
+    ./wm
   ];
 }
