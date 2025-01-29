@@ -2,7 +2,7 @@
 
 {
   environment.systemPackages = [
-    inputs.nixvim.packages.${pkgs.system}.default
-    inputs.writer.packages.${pkgs.system}.default
+    inputs.nixvim.packages.${pkgs.system}.code
+    inputs.nixvim.packages.${pkgs.system}.writer
   ];
 }

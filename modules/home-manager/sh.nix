@@ -8,8 +8,8 @@ let
   alias = {
     bt = "bluetoothctl";
     mpv = "flatpak run io.mpv.Mpv";
-    nv = "${inputs.nixvim.packages.${pkgs.system}.default}/bin/nvim";
-    wr = "${inputs.writer.packages.${pkgs.system}.default}/bin/nvim";
+    nv = "${inputs.nixvim.packages.${pkgs.system}.code}/bin/nvim";
+    wr = "${inputs.nixvim.packages.${pkgs.system}.writer}/bin/nvim";
     rm = "trash-put";
     cd = "z";
     times = "sudo -E timeshift-gtk";

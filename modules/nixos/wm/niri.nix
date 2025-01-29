@@ -7,13 +7,13 @@
 with lib.mkOption;
 let
 
-  bar = pkgs.pkgs.writeShellScriptBin "bar" ''
-    pkill waybar;
-    exec waybar
-  '';
+  # bar = pkgs.pkgs.writeShellScriptBin "bar" ''
+  #   pkill waybar;
+  #   exec waybar
+  # '';
 
   wallpaper = pkgs.pkgs.writeShellScriptBin "wallpaper" ''
-    ${pkgs.swww}/bin/swww init
+    ${pkgs.swww}/bin/swww-daemon
   '';
 
   volumeUp = pkgs.pkgs.writeShellScriptBin "up" ''
@@ -56,120 +56,122 @@ let
   '';
 in
 {
-    environment.systemPackages = with pkgs; [
-      cage
-      wayland-utils
-      xwayland-satellite-unstable
-      gamescope
-    ];
+  environment.systemPackages = with pkgs; [
+    cage
+    gamescope
+    swww
+    wayland-utils
+    wl-clipboard
+    xwayland-satellite-unstable
+  ];
 
-    # niri config 
-    systemd.user.services.niri-flake-polkit.enable = false;
-    programs.niri.enable = true;
-    home-manager.users.winston.programs.niri = {
-      package = pkgs.niri-stable;
-      settings = {
-        outputs."eDP-1".scale = 1.5;
-        spawn-at-startup = [
-          { command = [ "${wallpaper}/bin/wallpaper" ]; }
-          { command = [ "${bar}/bin/bar" ]; }
-        ];
-        input = {
-          keyboard.xkb = {
-            layout = "us,es";
-            options = "grp:win_space_toggle";
-          };
-          touchpad = {
-            # accel-profile = "adaptive";
-            # accel-speed = 0;
-            click-method = "clickfinger";
-            natural-scroll = true;
-            scroll-method = "two-finger";
-            tap = true;
-          };
+  # niri config
+  systemd.user.services.niri-flake-polkit.enable = false;
+  programs.niri.enable = true;
+  home-manager.users.winston.programs.niri = {
+    package = pkgs.niri-stable;
+    settings = {
+      outputs."eDP-1".scale = 1.5;
+      spawn-at-startup = [
+        { command = [ "${wallpaper}/bin/wallpaper" ]; }
+        # { command = [ "${bar}/bin/bar" ]; }
+      ];
+      input = {
+        keyboard.xkb = {
+          layout = "us,es";
+          options = "grp:win_space_toggle";
         };
-        layout = {
-          gaps = 16;
-          center-focused-column = "never";
-          preset-column-widths = [
-            { proportion = 1.0 / 3.0; }
-            { proportion = 1.0 / 2.0; }
-            { proportion = 1.0; }
-          ];
-          default-column-width = {
-            proportion = 1.0 / 2.0;
-          };
-          focus-ring = {
-            width = 4;
-          };
-          struts = {
-            left = 48;
-            right = 48;
-            bottom = 32;
-            top = 32;
-          };
+        touchpad = {
+          # accel-profile = "adaptive";
+          # accel-speed = 0;
+          click-method = "clickfinger";
+          natural-scroll = true;
+          scroll-method = "two-finger";
+          tap = true;
         };
-        binds =
-          with config.home-manager.users.winston.lib.niri.actions;
-          let
-            mod = "Alt";
-          in
-          {
-            "XF86AudioRaiseVolume".action = spawn "${volumeUp}/bin/up";
-            "XF86AudioLowerVolume".action = spawn "${volumeDown}/bin/down";
-
-            "${mod}+F".action = fullscreen-window;
-            "${mod}+M".action = spawn "swaync-client" "-t";
-            "${mod}+Return".action = spawn "kitty";
-            "${mod}+Shift+E".action = spawn "${pkgs.wlogout}/bin/wlogout";
-            "${mod}+Shift+Q".action = close-window;
-            "${mod}+Space".action = spawn "${pkgs.wofi}/bin/wofi" "--show" "drun" "-Ibm" "-W" "576";
-            "Ctrl+Shift+P".action = spawn "${pkgs.wofi-pass}/bin/wofi-pass";
-            "Ctrl+Shift+S".action = spawn "${screenshot}/bin/screenshot";
-
-            # movement
-            "${mod}+H".action = focus-column-left;
-            "${mod}+L".action = focus-column-right;
-            "${mod}+K".action = focus-window-or-workspace-up;
-            "${mod}+J".action = focus-window-or-workspace-down;
-
-            # window manipulation
-            "${mod}+Shift+H".action = move-column-left;
-            "${mod}+Shift+L".action = move-column-right;
-            "${mod}+Shift+K".action = move-window-up-or-to-workspace-up;
-            "${mod}+Shift+J".action = move-window-down-or-to-workspace-down;
-
-            "${mod}+Minus".action = set-column-width "-10%";
-            "${mod}+Equal".action = set-column-width "+10%";
-
-            "${mod}+Shift+Minus".action = set-window-height "-10%";
-            "${mod}+Shift+Equal".action = set-window-height "+10%";
-
-            "${mod}+A".action = consume-window-into-column;
-            "${mod}+R".action = expel-window-from-column;
-            "${mod}+S".action = switch-preset-column-width;
-
-            # workspaces
-            "${mod}+1".action = focus-workspace 1;
-            "${mod}+2".action = focus-workspace 2;
-            "${mod}+3".action = focus-workspace 3;
-            "${mod}+4".action = focus-workspace 4;
-            "${mod}+5".action = focus-workspace 5;
-            "${mod}+6".action = focus-workspace 6;
-            "${mod}+7".action = focus-workspace 7;
-            "${mod}+8".action = focus-workspace 8;
-            "${mod}+9".action = focus-workspace 9;
-
-            "${mod}+Shift+1".action = move-column-to-workspace 1;
-            "${mod}+Shift+2".action = move-column-to-workspace 2;
-            "${mod}+Shift+3".action = move-column-to-workspace 3;
-            "${mod}+Shift+4".action = move-column-to-workspace 4;
-            "${mod}+Shift+5".action = move-column-to-workspace 5;
-            "${mod}+Shift+6".action = move-column-to-workspace 6;
-            "${mod}+Shift+7".action = move-column-to-workspace 7;
-            "${mod}+Shift+8".action = move-column-to-workspace 8;
-            "${mod}+Shift+9".action = move-column-to-workspace 9;
-          };
       };
+      layout = {
+        gaps = 16;
+        center-focused-column = "never";
+        preset-column-widths = [
+          { proportion = 1.0 / 3.0; }
+          { proportion = 1.0 / 2.0; }
+          { proportion = 1.0; }
+        ];
+        default-column-width = {
+          proportion = 1.0 / 2.0;
+        };
+        focus-ring = {
+          width = 4;
+        };
+        struts = {
+          left = 48;
+          right = 48;
+          bottom = 32;
+          top = 32;
+        };
+      };
+      binds =
+        with config.home-manager.users.winston.lib.niri.actions;
+        let
+          mod = "Alt";
+        in
+        {
+          "XF86AudioRaiseVolume".action = spawn "${volumeUp}/bin/up";
+          "XF86AudioLowerVolume".action = spawn "${volumeDown}/bin/down";
+
+          "${mod}+F".action = fullscreen-window;
+          "${mod}+M".action = spawn "swaync-client" "-t";
+          "${mod}+Return".action = spawn "kitty";
+          "${mod}+Shift+E".action = spawn "${pkgs.wlogout}/bin/wlogout";
+          "${mod}+Shift+Q".action = close-window;
+          "${mod}+Space".action = spawn "${pkgs.wofi}/bin/wofi" "--show" "drun" "-Ibm" "-W" "576";
+          "Ctrl+Shift+P".action = spawn "${pkgs.wofi-pass}/bin/wofi-pass";
+          "Ctrl+Shift+S".action = spawn "${screenshot}/bin/screenshot";
+
+          # movement
+          "${mod}+H".action = focus-column-left;
+          "${mod}+L".action = focus-column-right;
+          "${mod}+K".action = focus-window-or-workspace-up;
+          "${mod}+J".action = focus-window-or-workspace-down;
+
+          # window manipulation
+          "${mod}+Shift+H".action = move-column-left;
+          "${mod}+Shift+L".action = move-column-right;
+          "${mod}+Shift+K".action = move-window-up-or-to-workspace-up;
+          "${mod}+Shift+J".action = move-window-down-or-to-workspace-down;
+
+          "${mod}+Minus".action = set-column-width "-10%";
+          "${mod}+Equal".action = set-column-width "+10%";
+
+          "${mod}+Shift+Minus".action = set-window-height "-10%";
+          "${mod}+Shift+Equal".action = set-window-height "+10%";
+
+          "${mod}+A".action = consume-window-into-column;
+          "${mod}+R".action = expel-window-from-column;
+          "${mod}+S".action = switch-preset-column-width;
+
+          # workspaces
+          "${mod}+1".action = focus-workspace 1;
+          "${mod}+2".action = focus-workspace 2;
+          "${mod}+3".action = focus-workspace 3;
+          "${mod}+4".action = focus-workspace 4;
+          "${mod}+5".action = focus-workspace 5;
+          "${mod}+6".action = focus-workspace 6;
+          "${mod}+7".action = focus-workspace 7;
+          "${mod}+8".action = focus-workspace 8;
+          "${mod}+9".action = focus-workspace 9;
+
+          "${mod}+Shift+1".action = move-column-to-workspace 1;
+          "${mod}+Shift+2".action = move-column-to-workspace 2;
+          "${mod}+Shift+3".action = move-column-to-workspace 3;
+          "${mod}+Shift+4".action = move-column-to-workspace 4;
+          "${mod}+Shift+5".action = move-column-to-workspace 5;
+          "${mod}+Shift+6".action = move-column-to-workspace 6;
+          "${mod}+Shift+7".action = move-column-to-workspace 7;
+          "${mod}+Shift+8".action = move-column-to-workspace 8;
+          "${mod}+Shift+9".action = move-column-to-workspace 9;
+        };
     };
+  };
 }

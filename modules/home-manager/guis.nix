@@ -13,10 +13,13 @@ let
     allRefs = true;
     rev = "04dfd1b4f009eaf0c9753a1267864057800afc92";
   }) { };
-in {
-    home.packages = with pkgs; [
+in
+{
+  home.packages =
+    with pkgs;
+    [
       # morgen
-        inputs.zen-browser.packages."${pkgs.system}".default
+      inputs.zen-browser.packages."${pkgs.system}".default
       brightnessctl
       firefox
       foliate
@@ -35,13 +38,13 @@ in {
     ]
     ++ [ godotpkgs.godot_4 ];
 
-    programs.kitty = {
-      enable = true;
-      settings = {
-        enable_audio_bell = false;
-      };
-      extraConfig = ''
-        background_opacity 0.85
-      '';
+  programs.kitty = {
+    enable = true;
+    settings = {
+      enable_audio_bell = false;
     };
+    extraConfig = ''
+      background_opacity 0.85
+    '';
+  };
 }
