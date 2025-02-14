@@ -24,7 +24,7 @@ let
     export NIXPKGS_ALLOW_INSECURE=1
     export NIXPKGS_ALLOW_BROKEN=1
     export NIXPKGS_ALLOW_UNFREE=1
-    export STARSHIP_CONFIG=${config.home.homeDirectory}/myHome/dotfiles/.config/starship.toml
+    export STARSHIP_CONFIG=${config.home.homeDirectory}/nixcfg/dotfiles/starship.toml
     eval "$(starship init zsh)"
     eval "$(zoxide init zsh)"
     eval $(thefuck --alias)

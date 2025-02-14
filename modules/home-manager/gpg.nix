@@ -11,7 +11,7 @@
     enable = true;
     publicKeys = [
       {
-        source = /home/winston/myHome/gpg-key/subkey.pub;
+        source = config.home.homeDirectory + "/nixcfg/gpg-key/subkey.pub";
         trust = 5;
       }
     ];

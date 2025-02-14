@@ -8,7 +8,7 @@
   home.file = {
     ".config/zellij/" = {
       recursive = true;
-      source = config.home.homeDirectory + "/myHome/dotfiles/.config/zellij";
+      source = config.home.homeDirectory + "/nixcfg/dotfiles/zellij";
     };
   };
 }

@@ -19,14 +19,17 @@ in
     with pkgs;
     [
       # morgen
-      inputs.zen-browser.packages."${pkgs.system}".default
       brightnessctl
       firefox
       foliate
+      inputs.zen-browser.packages."${pkgs.system}".default
       komikku
       krita
       libreoffice
       mpv
+      halftone
+      gthumb
+      gimp
       obsidian
       remnote
       spotify
@@ -35,6 +38,7 @@ in
       ueberzugpp
       vesktop
       winetricks
+      zoom-us
     ]
     ++ [ godotpkgs.godot_4 ];
 

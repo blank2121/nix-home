@@ -2,14 +2,14 @@
 {
   imports = [
     ./clis.nix
-    ./guis.nix
     ./file-viewer.nix
     ./gammastep.nix
     ./git.nix
     ./gpg.nix
+    ./guis.nix
     ./pass-store.nix
-    ./photograph.nix
     ./python-pkgs.nix
+    ./rust-pkgs.nix
     ./sh.nix
     ./zellij.nix
   ];

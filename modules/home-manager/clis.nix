@@ -36,10 +36,7 @@
     openssl_3
     pandoc
     pango
-    poetry
-    python312Full
     ripgrep-all
-    rustup
     texliveFull
     trash-cli
     vim

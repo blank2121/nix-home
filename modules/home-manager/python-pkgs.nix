@@ -8,5 +8,8 @@
     scikit-learn
     seaborn
     chromadb
-  ];
+  ] ++ (with pkgs; [
+    python312Full
+    poetry
+  ]);
 }
