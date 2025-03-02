@@ -9,4 +9,5 @@
     swaynotificationcenter
     libnotify
   ];
+  home-manager.users.winston.services.batsignal.enable = true;
 }

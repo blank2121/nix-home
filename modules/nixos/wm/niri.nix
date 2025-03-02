@@ -87,8 +87,9 @@ in
           click-method = "clickfinger";
           natural-scroll = true;
           scroll-method = "two-finger";
-          scroll-factor = 0.3;
+          scroll-factor = 0.15;
           tap = true;
+          dwt = true;
         };
       };
       layout = {
