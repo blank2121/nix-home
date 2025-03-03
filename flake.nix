@@ -56,10 +56,12 @@
       ];
 
       desktop = [
-	./modules/nixos/style.nix
+	    ./modules/nixos/style.nix
+        # ./modules/nixos/games.nix
         ./modules/nixos/nixvim.nix
         ./modules/nixos/audio.nix
-        ./modules/nixos/wm/plasma.nix
+        ./modules/nixos/wm/gnome.nix
+        ./modules/nixos/nvidia.nix
       ];
     in
     {
