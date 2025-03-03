@@ -124,4 +124,7 @@ in
       google-fonts
     ];
   };
+  
+  # weird qt error even tho qt is not used at all
+  stylix.targets.qt.platform = "qtct";
 }
