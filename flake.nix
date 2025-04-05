@@ -39,56 +39,11 @@
           niri.overlays.niri
           polymc.overlay
         ];
-      };
-    
-      # variable definitions
-      username = "winston";
-      hostname = "main";
- 
-      # used modules
-      mainFiles = [
-        ./modules/nixos/audio.nix
-        ./modules/nixos/nixvim.nix
-        ./modules/nixos/style.nix
-        ./modules/nixos/wm/niri.nix
-        ./modules/nixos/wm/swaylock.nix
-        ./modules/nixos/wm/swaync.nix
-        ./modules/nixos/wm/waybar.nix
-        ./modules/nixos/wm/wayland.nix
-        ./modules/nixos/wm/wlogout.nix
-      ];
+      }; 
     in
     {
       nixosConfigurations = {
         main = nixpkgs.lib.nixosSystem {
-          inherit pkgs;
-          specialArgs = { inherit inputs username hostname; };
-          modules = mainFiles
-            ++ [
-              ./hosts/main/configuration.nix
-              ./hosts/main/hardware-configuration.nix
-              niri.nixosModules.niri
-              nixos-hardware.nixosModules.asus-zephyrus-ga402x-amdgpu
-              stylix.nixosModules.stylix
-              home-manager.nixosModules.home-manager
-              {
-                home-manager.useGlobalPkgs = true;
-                home-manager.useUserPackages = true;
-                home-manager = {
-                  backupFileExtension = "backup";
-                  extraSpecialArgs = {
-                    inherit inputs;
-                    inherit username;
-                  };
-                  users.${username}.imports = [
-                    ./hosts/main/home.nix
-                    ./modules/home-manager/all.nix
-                  ];
-                };
-              }
-            ];
-        };
-        nmain = nixpkgs.lib.nixosSystem {
             inherit pkgs;
             # only supports single user
             specialArgs = { 
