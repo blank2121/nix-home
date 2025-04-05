@@ -21,9 +21,7 @@ in
       # morgen
       brightnessctl
       firefox
-      foliate
       inputs.zen-browser.packages."${pkgs.system}".default
-      komikku
       krita
       libreoffice
       mpv
@@ -36,7 +34,7 @@ in
       thunderbird-128
       tor-browser
       ueberzugpp
-      vesktop
+      discord
       winetricks
       zoom-us
     ]

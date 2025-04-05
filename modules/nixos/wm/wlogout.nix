@@ -1,6 +1,9 @@
-{ ... }:
 {
-  home-manager.users.winston.programs.wlogout = {
+  username ? "winston",
+  ...
+}:
+{
+  home-manager.users.${username}.programs.wlogout = {
     enable = true;
     style = ''
       window {

@@ -1,5 +1,5 @@
 {
-  config,
+  username ? "winston",
   pkgs,
   lib,
   ...
@@ -9,7 +9,7 @@ let
   aagl-gtk-on-nix = import (
     builtins.fetchTarball {
       url = "https://github.com/ezKEa/aagl-gtk-on-nix/archive/main.tar.gz";
-      sha256 = "0v59frhfnyy7pbmbv7bdzssdp554bjsgmmm4dw31p5askysmlvib";
+      sha256 = "0f59radafvzdfn3ar1y6glx9ixc9hbvysaalsp492ixp8ihpkbxv";
     }
   );
 in
@@ -19,32 +19,40 @@ in
   ];
 
   # one off games/apps
-  # override for hsr to not install
-  programs.honkers-railway-launcher.enable = false;
+  programs.honkers-railway-launcher.enable = true;
 
   # steam gaming
 
-  environment.sessionVariables = {
-    STEAM_EXTRA_COMPACT_TOOL_PATHS = "/home/winston/.steam/root/compatibilitytools.d";
+  programs.steam = {
+    dedicatedServer.openFirewall = true;
+    enable = true;
+    gamescopeSession.enable = true;
+    localNetworkGameTransfers.openFirewall = true;
+    protontricks.enable = true;
+    remotePlay.openFirewall = true;
   };
 
-  programs.steam.enable = true;
-  programs.steam.gamescopeSession.enable = true;
+  environment.sessionVariables = {
+    STEAM_EXTRA_COMPACT_TOOL_PATHS = "/home/${username}/.steam/root/compatibilitytools.d";
+  };
+
+  programs.gamescope = {
+    enable = true;
+    capSysNice = true;
+  };
 
   # games + packages
   environment.systemPackages = with pkgs; [
     # games
-    polymc
+    # polymc
 
     # tools
     mangohud
     protonup
-    r2modman
+    # r2modman
 
     # emulators
-    ryujinx
-    melonDS
+    # ryujinx
+    # melonDS
   ];
-
-  programs.gamemode.enable = true;
 }

@@ -1,4 +1,4 @@
-{ config, ... }:
+{ username ? "winston", ... }:
 {
   programs.zellij = {
     enable = true;
@@ -8,7 +8,7 @@
   home.file = {
     ".config/zellij/" = {
       recursive = true;
-      source = config.home.homeDirectory + "/nixcfg/dotfiles/zellij";
+      source = "/home/${username}/nixcfg/dotfiles/zellij";
     };
   };
 }

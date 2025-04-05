@@ -21,17 +21,9 @@
     shell = pkgs.zsh;
   };
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  networking.hostName = "${hostname}";
-
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
-  networking.extraHosts = ''
-    0.0.0.0 log-upload-os.hoyoverse.com
-    0.0.0.0 sg-public-data-api.hoyoverse.com
-  '';
 
   # bluetooth setup
   hardware.bluetooth.enable = true; # enables support for Bluetooth
@@ -39,10 +31,10 @@
   services.blueman.enable = true;
 
   # Enable networking
-  networking.networkmanager.enable = true;
-
-  # Set your time zone.
-  time.timeZone = "America/New_York";
+  networking = {
+    hostName = hostname;
+    networkmanager.enable = true;
+  };
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";

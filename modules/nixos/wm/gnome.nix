@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 {
   # Configure keymap in X11
   services.xserver = {
@@ -15,7 +20,7 @@
       Option "UseEdid" "false"
       Option "PreferredMode" "2560x1600"
     '';
-  }; 
+  };
   # desktop environment
   services.xserver.displayManager.gnome.enable = true;
 }

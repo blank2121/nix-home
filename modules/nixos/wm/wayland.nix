@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ ... }:
 {
   imports = [
     ./swaylock.nix
@@ -25,9 +25,10 @@
     '';
   };
 
-  services.displayManager.sddm = {
-    enable = true;
-    wayland.enable = true;
-    enableHidpi = true;
-  };
+  # services.displayManager.sddm = {
+  #   enable = true;
+  #   wayland.enable = true;
+  #   enableHidpi = true;
+  # };
+  services.displayManager.ly.enable = true;
 }

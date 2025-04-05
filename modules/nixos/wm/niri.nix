@@ -1,10 +1,9 @@
 {
   config,
+  username ? "winston",
   pkgs,
-  lib,
   ...
 }:
-with lib.mkOption;
 let
 
   # bar = pkgs.pkgs.writeShellScriptBin "bar" ''
@@ -58,19 +57,20 @@ in
 {
   environment.systemPackages = with pkgs; [
     cage
-    gamescope
-    swww
     wayland-utils
     wl-clipboard
     xwayland-satellite-unstable
   ];
 
+  home-manager.users.${username}.programs.swww.enable = true;
+
   # niri config
   systemd.user.services.niri-flake-polkit.enable = false;
   programs.niri.enable = true;
-  home-manager.users.winston.programs.niri = {
+  home-manager.users.${username}.programs.niri = {
     package = pkgs.niri-stable;
     settings = {
+      environment."NIXOS_OZONE_WL" = 1;
       outputs."eDP-1".scale = 1.5;
       spawn-at-startup = [
         { command = [ "${wallpaper}/bin/wallpaper" ]; }
@@ -114,7 +114,7 @@ in
         };
       };
       binds =
-        with config.home-manager.users.winston.lib.niri.actions;
+        with config.home-manager.users.${username}.lib.niri.actions;
         let
           mod = "Alt";
         in

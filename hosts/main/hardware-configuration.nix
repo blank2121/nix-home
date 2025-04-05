@@ -49,7 +49,18 @@
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   # OpenGl for AMD
-  hardware.graphics.extraPackages = [
-    pkgs.amdvlk
-  ];
+  # hardware.graphics.extraPackages = [
+  #   pkgs.amdvlk
+  # ];
+  hardware = {
+    graphics = {
+      enable = true;
+      enable32Bit = true;
+    };
+
+    amdgpu.amdvlk = {
+      enable = true;
+      support32Bit.enable = true;
+    };
+  };
 }

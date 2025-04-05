@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ username ? "winston", pkgs, ... }:
 {
   services.gpg-agent = {
     enable = true;
@@ -11,7 +11,7 @@
     enable = true;
     publicKeys = [
       {
-        source = config.home.homeDirectory + "/nixcfg/gpg-key/subkey.pub";
+        source = "/home/${username}/nixcfg/gpg-key/subkey.pub";
         trust = 5;
       }
     ];

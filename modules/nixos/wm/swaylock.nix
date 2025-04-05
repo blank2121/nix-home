@@ -1,6 +1,9 @@
-{ ... }:
 {
-  home-manager.users.winston.programs.swaylock = {
+  username ? "winston",
+  ...
+}:
+{
+  home-manager.users.${username}.programs.swaylock = {
     enable = true;
     settings = {
       indicator-idle-visible = false;

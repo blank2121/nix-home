@@ -26,7 +26,6 @@
       nixos-hardware,
       nixpkgs,
       stylix,
-      zen-browser,
       ...
     }@inputs:
     let
@@ -41,9 +40,13 @@
           polymc.overlay
         ];
       };
+    
+      # variable definitions
       username = "winston";
       hostname = "main";
-      main = [
+ 
+      # used modules
+      mainFiles = [
         ./modules/nixos/audio.nix
         ./modules/nixos/nixvim.nix
         ./modules/nixos/style.nix
@@ -54,113 +57,56 @@
         ./modules/nixos/wm/wayland.nix
         ./modules/nixos/wm/wlogout.nix
       ];
-
-      desktop = [
-	    ./modules/nixos/style.nix
-        # ./modules/nixos/games.nix
-        ./modules/nixos/nixvim.nix
-        ./modules/nixos/audio.nix
-        ./modules/nixos/wm/gnome.nix
-        ./modules/nixos/nvidia.nix
-      ];
     in
     {
       nixosConfigurations = {
         main = nixpkgs.lib.nixosSystem {
           inherit pkgs;
-          specialArgs = { inherit inputs; };
-          modules = main ++ [
-            ./hosts/main/configuration.nix
-            ./hosts/main/hardware-configuration.nix
-            niri.nixosModules.niri
-            nixos-hardware.nixosModules.asus-zephyrus-ga402x-amdgpu
-            stylix.nixosModules.stylix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager = {
-                backupFileExtension = "backup";
-                extraSpecialArgs = {
-                  inherit inputs;
-                  inherit username;
-                };
-                users.${username}.imports = [
-                  ./hosts/main/home.nix
-                  ./modules/home-manager/all.nix
-                ];
-              };
-            }
-            (
-              { ... }:
+          specialArgs = { inherit inputs username hostname; };
+          modules = mainFiles
+            ++ [
+              ./hosts/main/configuration.nix
+              ./hosts/main/hardware-configuration.nix
+              niri.nixosModules.niri
+              nixos-hardware.nixosModules.asus-zephyrus-ga402x-amdgpu
+              stylix.nixosModules.stylix
+              home-manager.nixosModules.home-manager
               {
-                nix.settings.experimental-features = "nix-command flakes";
-
-                # Define a user account. Don't forget to set a password with ‘passwd’.
-                programs.zsh.enable = true;
-                users.users."${username}" = {
-                  isNormalUser = true;
-                  home = "/home/${username}";
-                  extraGroups = [
-                    "networkmanager"
-                    "wheel"
-                    "audio"
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+                home-manager = {
+                  backupFileExtension = "backup";
+                  extraSpecialArgs = {
+                    inherit inputs;
+                    inherit username;
+                  };
+                  users.${username}.imports = [
+                    ./hosts/main/home.nix
+                    ./modules/home-manager/all.nix
                   ];
-                  hashedPassword = "$6$CDoyxcjZZ6zoPWqx$TkOnZ7WplwA7rlQS4crnnnlpX0uuNnssFfvOYk6dOB0T7Xr/SURq9o.3MT.eAiu0TxUfWW3ERlyvRp/L06ZiS.";
-                  shell = pkgs.zsh;
                 };
-
-                networking.hostName = "${hostname}";
               }
-            )
-          ];
+            ];
         };
-        desktop = nixpkgs.lib.nixosSystem {
-          inherit pkgs;
-          specialArgs = { inherit inputs; };
-          modules = desktop ++ [
-            ./hosts/desktop/configuration.nix
-            ./hosts/desktop/hardware-configuration.nix
-            stylix.nixosModules.stylix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager = {
-                backupFileExtension = "backup";
-                extraSpecialArgs = {
-                  inherit inputs;
-                  inherit username;
-                };
-                users.${username}.imports = [
-                  ./hosts/desktop/home.nix
-                  ./modules/home-manager/all.nix
-                ];
-              };
-            }
-            (
-              { ... }:
-              {
-                nix.settings.experimental-features = "nix-command flakes";
-
-                # Define a user account. Don't forget to set a password with ‘passwd’.
-                programs.zsh.enable = true;
-                users.users."${username}" = {
-                  isNormalUser = true;
-                  home = "/home/${username}";
-                  extraGroups = [
-                    "networkmanager"
-                    "wheel"
-                    "audio"
-                  ];
-                  # hashedPassword = "$6$CDoyxcjZZ6zoPWqx$TkOnZ7WplwA7rlQS4crnnnlpX0uuNnssFfvOYk6dOB0T7Xr/SURq9o.3MT.eAiu0TxUfWW3ERlyvRp/L06ZiS.";
-                  shell = pkgs.zsh;
-                };
-
-                networking.hostName = "${hostname}";
-              }
-            )
-          ];
+        nmain = nixpkgs.lib.nixosSystem {
+            inherit pkgs;
+            # only supports single user
+            specialArgs = { 
+                inherit inputs;
+                username = "winston";
+                hostname = "main";
+            }; 
+            modules = [ 
+                ./hosts/nmain 
+                niri.nixosModules.niri
+                nixos-hardware.nixosModules.asus-zephyrus-ga402x-amdgpu
+                stylix.nixosModules.stylix
+                home-manager.nixosModules.home-manager {
+                  home-manager.useGlobalPkgs = true;
+                  home-manager.useUserPackages = true;
+                  home-manager = { backupFileExtension = "backup"; };
+                }
+            ];
         };
       };
     };

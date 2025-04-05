@@ -1,6 +1,10 @@
-{ pkgs, config, ... }:
 {
-  home-manager.users.winston.programs.waybar = {
+  username ? "winston",
+  pkgs,
+  ...
+}:
+{
+  home-manager.users.${username}.programs.waybar = {
     enable = true;
     systemd.enable = true;
     settings = {

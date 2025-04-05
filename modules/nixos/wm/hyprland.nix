@@ -1,5 +1,5 @@
 {
-  config,
+  username ? "winston",
   pkgs,
   lib,
   ...
@@ -53,13 +53,13 @@ in
     enable = true;
     xwayland.enable = true;
   };
-  home-manager.users.winston.home.packages = with pkgs; [
+  home-manager.users.${username}.home.packages = with pkgs; [
     swww
     wineWowPackages.waylandFull
     wl-clipboard
   ];
 
-  home-manager.users.winston.programs.rofi = {
+  home-manager.users.${username}.programs.rofi = {
     enable = true;
 
     extraConfig = {
@@ -79,7 +79,7 @@ in
     };
   };
 
-  home-manager.users.winston.wayland.windowManager.hyprland = {
+  home-manager.users.${username}.wayland.windowManager.hyprland = {
     enable = true;
 
     settings = {
@@ -133,9 +133,6 @@ in
           size = "3";
           passes = "1";
         };
-        drop_shadow = "yes";
-        shadow_range = "4";
-        shadow_render_power = "3";
       };
 
       animations = {
